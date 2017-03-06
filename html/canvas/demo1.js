@@ -2,7 +2,8 @@
  * Created by lzc on 2017/3/6.
  */
 (function(window, document){
-
+    var a = new Vec3();
+    debugger;
     /**
      * 设置canvas背景色
      * @param id
