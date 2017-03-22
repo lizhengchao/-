@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <ui>
+            <todo-items v-for="item in items" v-bind:item="item">
+            </todo-items>
+        </ui>
+    </div>
+<script type="text/javascript">
+    Vue.component('todo-items', {
+        props: ['item'],
+        template: '<li>{{item}}</li>'
+    })
+    var app = new Vue({
+        el: '#app',
+        data: {
+            items: ['this is row1', 'this is row2', 'this is row3']
+        }
+    })
+</script>
+</body>
+</html>
