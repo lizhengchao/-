@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<!--vue.js 基本应用 detail in https://cn.vuejs.org/v2/guide/-->
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">  <!--绑定dom值-->
+        {{message}}
+    </div>
+    <div id="app2">  <!--绑定属性-->
+        <span v-bind:title="message">
+            this is v-bind element
+        </span>
+    </div>
+    <div id="app3"> <!--v-if-->
+        <span v-if="check">
+            check is true!
+        </span>
+    </div>
+    <div id="app4"> <!--v-for-->
+        <ul>
+            <li v-for="rowname in rownames">
+                it is row, name: {{rowname}}
+            </li>
+        </ul>
+    </div>
+    <div id="app5">  <!--绑定事件-->
+        <span>message: {{message}}</span>
+        <button v-on:click="messagebutton">add a to message</button>
+    </div>
+    <div id="app6"> <!--v-model双向绑定-->
+        <span>message: {{message}}</span>
+        <input v-model="message">
+    </div>
+<script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: 1
+        }
+    })
+    var app2 = new Vue({
+        el: '#app2',
+        data: {
+            message: 'hello,it\'s title tap'
+        }
+    })
+    var app3 = new Vue({
+        el: '#app3',
+        data: {
+            check: true
+        }
+    })
+    var app4 = new Vue({
+        el: '#app4',
+        data: {
+            rownames: ['row0', 'row1', 'row2']
+        }
+    })
+    var app5 = new Vue({
+        el: '#app5',
+        data: {
+            message: '111'
+        },
+        methods: {
+            messagebutton: function(e){
+                this.message += 'a';
+            }
+        }
+    })
+    var app6 = new Vue({
+        el: '#app6',
+        data: {
+            message: ''
+        }
+    })
+</script>
+</body>
+</html>
