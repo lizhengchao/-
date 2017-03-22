@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="format-detection" content="telephone=no" />
+    <title></title>
+    <style>
+        html {
+            min-height: 1000px
+        }
+        body {
+            margin: 0px;
+            padding: 0px;
+            font-family: Helvetica Neue,Helvetica,Arial,Sans-serif;
+            height: 100%;
+        }
+
+        .poster-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .poster {
+            height: 200px;
+            width: 100%;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+
+        .poster-changer {
+            position: absolute; top: 0px;
+            width: 100%;
+            height: 250px;
+            background: -moz-linear-gradient(top, rgba(255,255,255,0), rgba(255,255,255,255));
+            background: -webkit-linear-gradient(top, rgba(255,255,255,0), rgba(255,255,255,255));
+            background: -o-linear-gradient(top, rgba(255,255,255,0), rgba(255,255,255,255));
+        }
+    </style>
+</head>
+<body>
+<div class="poster-container">
+    <div class="poster" style="background-image: url({innerImage});"></div>
+    <div class="poster-changer"></div>
+</div>
+
+<div style="width: 100%; overflow: hidden; min-height: 100%">
+    {innerHTML}
+</div>
+
+</body>
+</html>

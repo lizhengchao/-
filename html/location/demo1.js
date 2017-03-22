@@ -1,6 +1,15 @@
 /**
  * Created by lzc on 2017/3/7.
  */
+var obj = {
+    filter: {
+        pageindex: 1,
+        pagesize: 20
+    }
+}
+debugger;
+var objStr = JSON.stringify(obj);
+
 if(navigator && navigator.geolocation){
     navigator.geolocation.getCurrentPosition(function(coords){
         var latitude = coords.latitude,
