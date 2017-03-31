@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #container {
+            height: 200px;
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+       <span>
+            <a href="javascript:void(0)">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A voluptas!</a>
+       </span>
+    <!--
+    从container移出时 e.currentTarget、delegateTarget 和 target 都是 container
+    当从a移出时，e.currentTarget、delegateTargetd都是container， target是a
+    -->
+</div>
+<script type="text/javascript" src="jQuery.js"></script>
+<script type="text/javascript">
+    $('#container').mouseout(function (e) {
+        $(this).hide("slow");
+    });
+</script>
+</body>
+</html>

@@ -47,9 +47,14 @@
     <div class="poster-changer"></div>
 </div>
 
-<div style="width: 100%; overflow: hidden; min-height: 100%">
-    {innerHTML}
+<div id="container" style="width: 100%; overflow: hidden; min-height: 100%">
+">
 </div>
-
+<script type="text/javascript" src="jQuery.js"></script>
+<script type="text/javascript">
+    (function(){
+        $('#container').children('img').css('width', '100%');
+    })()
+</script>
 </body>
 </html>
