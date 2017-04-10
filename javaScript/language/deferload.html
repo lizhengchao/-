@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" defer="defer" src="deferload.js"></script>
+    <!--
+    ·内部script的defer属性是无效的
+    ·IE4、Firefox3.5 Safari 5和 Chrome是最早支持defer的浏览器，
+    其他浏览器则会忽略，因而如果要外部js被延迟加载，最保险的方法还是放到body最后-->
+    <script type="text/javascript" async="async" src="asynload.js"></script>
+    <!--
+    ·内部script的asyn属性是无效的
+    ·支持的有Firefox3.6、Safari 5和Chrome。IE8还不支持
+    -->
+</head>
+<body>
+<text>123</text>
+</body>
+</html>

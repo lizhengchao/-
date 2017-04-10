@@ -36,6 +36,7 @@
     })
     container.addEventListener("click", function(e){
         console.log("this is catch click event by container");
+        e.stopPropagation();
     }, true);
 
     center.addEventListener("click", function(e){
