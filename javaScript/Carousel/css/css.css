@@ -1,0 +1,71 @@
+.outer-container {
+    width: 500px;
+    height: 300px;
+    margin: 0px auto;
+    padding: 10px;
+    background-color: #eee;
+    position: relative;
+    overflow: hidden;
+}
+
+.inner-container {
+    width: 2550px;
+}
+
+.img-box {
+    float: left;
+    margin-right: 10px
+}
+
+.img-box img {
+    width: 500px;
+    height: 300px;
+}
+
+.round-button-container {
+    position: absolute;
+    left: 175px;
+    bottom: 20px;
+}
+ul {
+    padding: 0px;
+}
+
+li {
+    list-style-type:none;
+    float: left;
+}
+
+.round-img {
+    width: 20px;
+    height: 20px;
+    margin: 5px 5px;
+    background-color: red;
+    border-radius: 100px;
+}
+
+.tap .round-img {
+    background-color: black
+}
+
+.left-button {
+    width:  20px;
+    height: 20px;
+    background: url(../images/icon.png) no-repeat;
+    background-size: 20px 20px;
+    transform: rotate(-90deg);
+    position: absolute;
+    left: 15px;
+    top: 140px;
+}
+
+.right-button {
+    width:  20px;
+    height: 20px;
+    background: url(../images/icon.png) no-repeat;
+    background-size: 20px 20px;
+    transform: rotate(90deg);
+    position: absolute;
+    right: 15px ;
+    top: 140px;
+}
