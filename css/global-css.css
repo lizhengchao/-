@@ -1,0 +1,33 @@
+.item-container {
+    border-bottom: 1px solid #000000;
+    padding-bottom: 20px;
+}
+.item-container:after{
+    content: '';
+    clear: both;
+    display: block;
+}
+.img-container {
+    border: 1px solid #000000;
+    width: 50%;
+    float: left;
+}
+
+.img-container img {
+    max-width: 100%;
+}
+.test-container {
+    float: left;
+    width: 45%;
+    padding: 0px 20px;
+}
+.test-container:before {
+    content: '测试实例：';
+    display: block;
+    font-size: 1.17em;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    font-weight: bold;
+}

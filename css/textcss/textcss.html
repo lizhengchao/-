@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>文本属性css学习记录</title>
+    <link rel="stylesheet" href="../global-css.css">
+</head>
+<body>
+<div class="item-container">
+    <img src="screenshot/text-indent.jpg">
+    <div class="test-container">
+        <p>效果:</p>
+        <div style="text-indent: 20px">
+            开头首字母缩进20px
+        </div>
+        <a style="text-indent: 20px">内联元素首字母无法缩进</a>
+        <p>code:</p>
+        <div style="word-wrap:break-word; word-break: break-all">
+            &lt;div style=&quot;text-indent: 20px&quot;&gt;
+            开头首字母缩进20px
+            &lt;/div&gt;
+            &lt;a style=&quot;text-indent: 20px&quot;&gt;内联元素首字母无法缩进&lt;/a&gt;
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
