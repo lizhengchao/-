@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no`">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="description" content="view router mobile demo1">
+    <title>vue-router demo1</title>
+    <script type="text/javascript" src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+</head>
+<body>
+<div id="app">
+    <h1>Hello</h1>
+    <p>
+        <router-link to="/foo">Go to foo</router-link>
+        <router-link to="/bar">Go to bar</router-link>
+    </p>
+    <router-view></router-view>
+    <p>
+        <router-link to="/foo2">Go to foo2</router-link>
+    </p>
+
+</div>
+<script type="text/javascript">
+    const Foo = {template: '<div>foo</div>'};
+    const Bar = {template: '<div>bar</div>'};
+    const Foo2 = {template: '<div>foo2</div>'}
+
+    const routes = [
+        { path: '/foo', component: Foo},
+        { path: '/bar', component: Bar},
+        { path: '/foo2', component: Foo2}
+    ];
+
+    const router = new VueRouter({routes: routes});
+
+    const app = new Vue({
+        router: router
+    }).$mount('#app');
+</script>
+</body>
+</html>

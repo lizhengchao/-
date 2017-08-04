@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>简单双向绑定</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <style>
+        .edit-part {
+            width: 50%;
+            float: left;
+        }
+        .show-part {
+            width: 50%;
+            float: left;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div class="edit-part">
+        <textarea v-model="message" :placeholder="placeholder"></textarea>
+    </div>
+    <div class="show-part">
+        <h2 v-html="outputMessage"></h2>
+    </div>
+</div>
+<script>
+    var vue = new Vue({
+        el: '#app',
+        data: {
+            message: '',
+            placeholder: '请输入任意字母'
+        },
+        computed: {
+            outputMessage: function(){
+                return this.message.toUpperCase();
+            }
+        }
+    })
+</script>
+</body>
+</html>
