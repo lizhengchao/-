@@ -13,17 +13,18 @@
             <li>{{data}}</li>
         </template>
     </ul>
+    <button v-on:click="changeOrder">修改顺序</button>
     <div style="height: 100px"></div>
     <ul>
         <!-- 同时index和data -->
-        <template v-for="(data, index) in datas1">
+        <template v-for="(data, index) in datas2" :key="index">
             <li><pre>id: {{index}} data: {{data}}</pre></li>
         </template>
     </ul>
     <div style="height: 100px"></div>
     <ul>
         <!-- v-for和v-if同时使用 -->
-        <template v-for="data in datas2" v-if="data.isRender">
+        <template v-for="data in datas3" v-if="data.isRender">
             <li>{{data.data}}</li>
         </template>
     </ul>
@@ -33,7 +34,8 @@
         el: '#app',
         data: {
             datas1: ['data1', 'data2'],
-            datas2: [
+            datas2: ['data1', 'data2'],
+            datas3: [
                 {
                     isRender: true,
                     data: 'data1'
@@ -47,6 +49,19 @@
                     data: 'data3'
                 }
             ]
+        },
+        methods: {
+            changeOrder: function(){
+                this.datas1.reverse();
+                /* vue支持的变异方法
+                push()
+                 pop()
+                 shift()
+                 unshift()
+                 splice()
+                 sort()
+                 reverse()*/
+            }
         }
     })
 </script>
