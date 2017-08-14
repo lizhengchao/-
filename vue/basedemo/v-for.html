@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <ul>
+        <!--基本用法-->
+        <template v-for="data in datas1">
+            <li>{{data}}</li>
+        </template>
+    </ul>
+    <div style="height: 100px"></div>
+    <ul>
+        <!-- 同时index和data -->
+        <template v-for="(data, index) in datas1">
+            <li><pre>id: {{index}} data: {{data}}</pre></li>
+        </template>
+    </ul>
+    <div style="height: 100px"></div>
+    <ul>
+        <!-- v-for和v-if同时使用 -->
+        <template v-for="data in datas2" v-if="data.isRender">
+            <li>{{data.data}}</li>
+        </template>
+    </ul>
+</div>
+<script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        data: {
+            datas1: ['data1', 'data2'],
+            datas2: [
+                {
+                    isRender: true,
+                    data: 'data1'
+                },
+                {
+                    isRender: false,
+                    data: 'data2'
+                },
+                {
+                    isRender: true,
+                    data: 'data3'
+                }
+            ]
+        }
+    })
+</script>
+</body>
+</html>
