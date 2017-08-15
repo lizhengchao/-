@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+<!--编写可复用组件
+
+在编写组件时，留意是否要复用组件是有好处的。一次性组件跟其它组件紧密耦合没关系，但是可复用组件应当定义一个清晰的公开接口。
+Vue 组件的 API 来自三部分 - props, events 和 slots ：
+·Props 允许外部环境传递数据给组件
+·Events 允许从外部环境在组件内触发副作用
+·Slots 允许外部环境将额外的内容组合在组件中。
+-->
+<div id="app">
+    <input type="text" v-model="text">
+    <my-row :row-text="text" :is-show-length="true" test-porp="t" class="parnet-class"></my-row>
+    <!--非props属性会设置在组件的根元素，一般属性会覆盖，style和class则会合并-->
+    <my-row :row-text="text" :is-show-length="false"></my-row>
+
+    <my-button style="margin-top: 100px" v-on:add="add">
+        <p style="width: 20px; height: 20px; background-color: red"></p>
+    </my-button>
+    <div>{{total}}</div>
+</div>
+
+<script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        data: {
+            text: '',
+            total: 0,
+        },
+        methods: {
+            add: function(){
+                this.total += 1;
+            }
+        },
+        components: {
+            'my-row': {
+                props: {    //props一般为驼峰风格
+                    'rowText': '',
+                    isShowLength: Boolean
+                },
+                template: '<div class="children-class">text: {{rowText}}<template v-if="isShowLength"> textLength: {{rowText.length}}</template> </div>'
+            },
+            'my-button': {
+                template: '<div>' +
+                '<button v-on:click="add">点击触发父add方法</button>' +
+                '<slot></slot>' +
+                '</div>',
+                methods: {
+                    add: function(){
+                        this.$emit('add');
+                    }
+                }
+            }
+        }
+    })
+</script>
+</body>
+</html>
