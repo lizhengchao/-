@@ -1,6 +1,8 @@
 /**
  * Created by lzc on 2017/8/15.
  */
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+var ExtractTextPlugin = require("extract-text-webpack-plugin"); /*将所有css提取到一个css中*/
 
 module.exports = {
     devtool: 'cheap-module-eval-source-map',
@@ -46,11 +48,15 @@ module.exports = {
                 },
                 {
                     test: /\.css$/,
-                    loaders: ['style-loader', 'css-loader']
+                    loaders: ['style-loader', 'css-loader', 'postcss-loader']
                 }
         ]
 
     },
     plugins: [
+        new HtmlWebpackPlugin({
+            template: __dirname + "/app/index.tmpl.html"//new 一个这个插件的实例，并传入相关的参数
+        }),
+        new ExtractTextPlugin("style.css")
     ],
 }
