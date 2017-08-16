@@ -1,7 +1,7 @@
 <template>
     <div>
         <titlebar title="新闻公告" @touchSearch="touchSearch"></titlebar>
-        <carousel style="margin-top: 50px" width="375px" height="250px" :imgs="imgs"></carousel>
+        <carousel style="margin-top: 50px" width="250px" height="150px" :imgs="imgs"></carousel>
     </div>
 </template>
 

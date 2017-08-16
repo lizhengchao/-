@@ -105,8 +105,8 @@ export default {
 
     .round-button-container {
         position: absolute;
-        right: 20px;
-        bottom: 20px;
+        right: 5%;
+        bottom: 5%;
     }
     ul {
         padding: 0px;
@@ -133,21 +133,21 @@ export default {
         width:  20px;
         height: 20px;
         background: url(../assets/test/icon.png) no-repeat;
-        background-size: 20px 20px;
+        background-size: 100% 100%;
         transform: rotate(-90deg);
         position: absolute;
-        left: 15px;
-        top: 140px;
+        left: 5%;
+        top: 45%;
     }
 
     .right-button {
         width:  20px;
         height: 20px;
         background: url(../assets/test/icon.png) no-repeat;
-        background-size: 20px 20px;
+        background-size: 100% 100%;
         transform: rotate(90deg);
         position: absolute;
-        right: 15px ;
-        top: 140px;
+        right: 5%;
+        top: 45%;
     }
 </style>
