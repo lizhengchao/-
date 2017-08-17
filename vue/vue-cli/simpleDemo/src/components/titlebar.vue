@@ -2,14 +2,14 @@
 <div class="titlebar">
     <div class="back-btn" @click="touchBack"></div>
     <div class="title-text">{{title}}</div>
-    <div class="search-btn" @click="touchSearch"></div>
+    <div class="search-btn" @click="touchSearch" v-show="hasTouchSearch"></div>
 </div>
 </template>
 
 <script>
 export default {
     name: 'titlebar',
-    props: ['title'],
+    props: ['title', 'hasTouchSearch'],
     methods: {
         touchBack: function() {
             this.$router.go(-1);

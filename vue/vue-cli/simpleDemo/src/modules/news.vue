@@ -1,6 +1,6 @@
 <template>
     <div>
-        <titlebar title="新闻公告" @touchSearch="touchSearch"></titlebar>
+        <titlebar title="新闻公告" hasTouchSearch="true" @touchSearch="touchSearch"></titlebar>
         <carousel style="margin: 50px auto 0px auto" width="375px" height="250px" :imgs="imgs"></carousel>
         <div class="news-list" v-for="news in newsDatas">
             <router-link :to="'/news/detail/' + news.ccode">

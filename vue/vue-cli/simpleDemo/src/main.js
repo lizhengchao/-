@@ -6,7 +6,9 @@ new Vue({
   el: '#app',
   router: Router,
   template:
-  '<router-view></router-view>',
+  '<transition>' +
+  '<router-view></router-view>' +
+  '</transition>',
   methods: {
   }
 })
