@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from './router/router'
+import './main.css'
 
 new Vue({
   el: '#app',

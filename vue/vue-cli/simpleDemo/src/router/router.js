@@ -4,12 +4,16 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import News from '../modules/news.vue'
+import NewsDetail from '../modules/newsDetail.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
     {
-        path: '/news', component: News
+        path: '/news/list', component: News
+    },
+    {
+        path: '/news/detail/:id', component: NewsDetail
     }
 ]
 

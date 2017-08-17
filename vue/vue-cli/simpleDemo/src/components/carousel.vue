@@ -2,8 +2,11 @@
     <div class="outer-container" :style="{width: cWidth}" @touchstart="outerTouchstart" @touchend="outerTouchend">
         <div class="img-container" :style="{width: sumWidth, transition: 'transform 0.5s', transform: 'translateX('+translateX+'px)'}">
             <div class="img-box" :style="{width: imgBoxWidth, height: cHeight}" v-for="img in imgs">
-                <a :href="img.href"><img :src="img.src"></a>
+                <router-link :to="img.href"><img :src="img.src"></router-link>
             </div>
+        </div>
+        <div class="text-container">
+            {{imgs[curIndex].text}}
         </div>
         <div class="round-button-container">
             <ul>
@@ -101,6 +104,13 @@ export default {
     .img-box img {
         width: 100%;
         height: 100%;
+    }
+
+    .text-container {
+        position: absolute;
+        bottom: 5%;
+        left: 5%;
+        color: white
     }
 
     .round-button-container {
