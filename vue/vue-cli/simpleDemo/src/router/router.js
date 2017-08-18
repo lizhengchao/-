@@ -6,6 +6,7 @@ import VueRouter from 'vue-router'
 import PageTransition from '../modules/PageTransition.vue'
 import News from '../modules/news.vue'
 import NewsDetail from '../modules/newsDetail.vue'
+import NewsSearch from '../modules/newsSearch.vue'
 
 Vue.use(VueRouter)
 
@@ -21,6 +22,10 @@ const routes = [
             {
                 path: 'news/detail/:id',
                 component: NewsDetail
+            },
+            {
+                path: 'news/search',
+                component: NewsSearch
             }
         ]
     }

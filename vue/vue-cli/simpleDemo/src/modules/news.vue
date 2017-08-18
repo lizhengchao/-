@@ -72,7 +72,7 @@
         },
         methods: {
             touchSearch (e) {
-
+                this.$router.push('/news/search');
             },
             transformDate (date) {
                 var date = new Date(date),
