@@ -12,19 +12,19 @@ Vue.use(VueRouter)
 
 const routes = [
     {
-        path: '/',
+        path: '/news',
         component: PageTransition,
         children: [
             {
-                path: 'news/list',
+                path: 'list',
                 component: News
             },
             {
-                path: 'news/detail/:id',
+                path: 'detail/:id',
                 component: NewsDetail
             },
             {
-                path: 'news/search',
+                path: 'search',
                 component: NewsSearch
             }
         ]
