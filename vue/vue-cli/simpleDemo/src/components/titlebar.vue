@@ -12,7 +12,7 @@ export default {
     props: ['title', 'hasTouchSearch'],
     methods: {
         touchBack: function() {
-            this.$router.go(-1);
+            this.$router.goBack();
         },
         touchSearch: function(e) {
             this.$emit('touchSearch', e);
@@ -23,10 +23,6 @@ export default {
 
 <style scoped>
     .titlebar {
-        position: fixed;
-        top:0px;
-        left: 0px;
-        right: 0px;
         height: 30px;
         padding: 10px;
         text-align: center;

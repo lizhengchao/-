@@ -42,7 +42,6 @@
 <style scoped>
     .title {
         padding: 15px 12px 5px !important;
-        margin-top: 50px;
     }
 
     .desc {
