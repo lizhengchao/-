@@ -11,7 +11,7 @@
 </template>
 
 <script>
-    import Titlebar from '../components/titlebar.vue'
+    import Titlebar from '../../components/titlebar.vue'
     import axios from 'axios'
 
     export default {

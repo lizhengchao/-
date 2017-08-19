@@ -15,8 +15,8 @@
 </template>
 
 <script>
-    import Titlebar from '../components/titlebar.vue'
-    import Carousel from '../components/carousel.vue'
+    import Titlebar from '../../components/titlebar.vue'
+    import Carousel from '../../components/carousel.vue'
     import axios from 'axios'
 
     export default {
@@ -29,27 +29,27 @@
             return {
                 imgs: [
                     {
-                        src: require('../assets/test/timg.jpg'),
+                        src: require('../../assets/test/timg.jpg'),
                         text: 'img1',
                         href: '/news/detail/1'
                     },
                     {
-                        src: require('../assets/test/timg2.jpg'),
+                        src: require('../../assets/test/timg2.jpg'),
                         text: 'img2',
                         href: '/news/detail/2'
                     },
                     {
-                        src: require('../assets/test/timg3.jpg'),
+                        src: require('../../assets/test/timg3.jpg'),
                         text: 'img3',
                         href: '/news/detail/3'
                     },
                     {
-                        src: require('../assets/test/timg4.jpg'),
+                        src: require('../../assets/test/timg4.jpg'),
                         text: 'img4',
                         href: '/news/detail/4'
                     },
                     {
-                        src: require('../assets/test/timg5.jpg'),
+                        src: require('../../assets/test/timg5.jpg'),
                         text: 'img5',
                         href: '/news/detail/5'
                     }

@@ -3,32 +3,41 @@
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import PageTransition from '../modules/PageTransition.vue'
-import News from '../modules/news.vue'
-import NewsDetail from '../modules/newsDetail.vue'
-import NewsSearch from '../modules/newsSearch.vue'
+
+import MainTab from '../modules/main/mainTab.vue'
+import PageTransition from '../modules/news/PageTransition.vue'
+import News from '../modules/news/news.vue'
+import NewsDetail from '../modules/news/newsDetail.vue'
+import NewsSearch from '../modules/news/newsSearch.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
     {
-        path: '/news',
-        component: PageTransition,
+        path: '/',
+        component: MainTab,
         children: [
             {
-                path: 'list',
-                component: News
-            },
-            {
-                path: 'detail/:id',
-                component: NewsDetail
-            },
-            {
-                path: 'search',
-                component: NewsSearch
+                path: '/news',
+                component: PageTransition,
+                children: [
+                    {
+                        path: 'list',
+                        component: News
+                    },
+                    {
+                        path: 'detail/:id',
+                        component: NewsDetail
+                    },
+                    {
+                        path: 'search',
+                        component: NewsSearch
+                    }
+                ]
             }
         ]
     }
+    
 ]
 
 VueRouter.prototype.goBack = function() {

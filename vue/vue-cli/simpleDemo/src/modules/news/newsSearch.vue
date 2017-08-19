@@ -2,7 +2,7 @@
     <div>
         <div class="search-bar-container">
             <div class="search-input-container">
-                <img src="../assets/search2.png" class="search-img">
+                <img src="../../assets/search2.png" class="search-img">
                 <input class="search-input" type="text" v-model="searchText">
             </div>
             <div class="cancel-btn" @click="cancel">取消</div>
