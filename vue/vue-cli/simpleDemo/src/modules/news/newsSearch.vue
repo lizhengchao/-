@@ -7,23 +7,60 @@
             </div>
             <div class="cancel-btn" @click="cancel">取消</div>
         </div>
-        <div class="result-contianer">{{searchText}}</div>
+        <news-item v-for="searchItem in searchData" :news="searchItem" key="searchItem.ccode"></news-item>
+        <div class="empty-tip" v-show="searchData.length == 0">没有搜索结果</div>
     </div>
 </template>
 
 <script>
+    import NewsItem from './components/newsItem.vue'
+    import axios from 'axios'
+
     export default {
         name: 'newsSearch',
         data () {
             return {
-                searchText: ''
+                searchText: '',
+                searchData: []
             }
         },
         components: {
+            NewsItem
         },
         methods: {
             cancel () {
                 this.$router.goBack();
+            }
+        },
+        watch: {
+            searchText (newValue, oldValue){
+                axios({
+                    url: 'http://218.108.53.116:8081/rest/api/oa/InformList/Get',
+                    method: 'post',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    data: {
+                        optype:'all',
+                        filterword: this.searchText,
+                        pageindex:0,
+                        pagesize:15
+                    },
+                    transformRequest: [function (data) {
+                        // Do whatever you want to transform the data
+                        let ret = ''
+                        for (let it in data) {
+                            ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+                        }
+                        return ret
+                    }],
+                }).then((resp) => {
+                    if(resp.statusText == 'OK'){
+                        this.searchData = resp.data.Content;
+                    }
+                }).catch((resp) => {
+                    console.info('search fail');
+                })
             }
         }
     }
@@ -63,8 +100,8 @@
         text-align: center;
     }
 
-    .result-contianer {
-        height: 500px;
-        background-color: white;
+    .empty-tip {
+        margin-top: 50px;
+        text-align: center;
     }
 </style>
