@@ -1,6 +1,6 @@
 <template>
     <div>
-        <router-view></router-view>
+        <router-view class="main-view"></router-view>
         <div class="tab-bar">
             <div class="tab-item" v-for="(tab, index) in tabs" @click="onIndex = index">
                 <router-link :to="tab.href">
@@ -51,6 +51,10 @@
 </script>
 
 <style scoped>
+    .main-view {
+        margin-bottom: 50px;
+    }
+
     .tab-bar {
         position: fixed;
         bottom: 0px;
