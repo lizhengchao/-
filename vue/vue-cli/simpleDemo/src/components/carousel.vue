@@ -1,6 +1,6 @@
 <!--利用vue的transition实现左右滑动-->
 <template>
-    <div class="outer-container" :style="{width: cWidth, height: cHeight}" @touchstart="outerTouchstart" @touchmove="" @touchend="outerTouchend">
+    <slider  class="outer-container" :style="{width: cWidth, height: cHeight}" @slideX="slideX">
         <router-link :to="imgs[curIndex].href"> <!--由于router-link会转换为<a>，没有高度，会无法触发动画-->
             <transition-group class="img-container" tag="div" :name="transitionName">
                 <!--transition-group的直接子元素必须有key,transition-group会存在，并替换为一个元素，默认为span，可通过tag设置-->
@@ -20,65 +20,58 @@
         <!--左右按钮-->
         <div class="left-button" @click="curIndex --"></div>
         <div class="right-button" @click="curIndex ++"></div>
-    </div>
+    </slider>
 </template>
 
 <script>
-export default {
-    name: 'carousel',
-    props: ['width', 'height', 'imgs'],
-    data () {
-        return {
-            curIndex: 0,
-            startX: 0,
-            startY: 0,
-            transitionName: ''
-        }
-    },
-    computed: {
-        cWidth () {
-            return this.width ? this.width : '375px'
+    import Slider from './slider.vue'
+
+    export default {
+        name: 'carousel',
+        props: ['width', 'height', 'imgs'],
+        components: {
+            Slider
         },
-        cHeight() {
-            return this.height ? this.height : '300px'
-        }
-    },
-    methods: {
-        outerTouchstart (event) {
-            this.startX = event.changedTouches[0].clientX;
-            this.startY= event.changedTouches[0].clientY;
+        data () {
+            return {
+                curIndex: 0,
+                transitionName: ''
+            }
         },
-        outerTouchend (event) {
-            var endX = event.changedTouches[0].clientX;
-            var endY = event.changedTouches[0].clientY;
-            if(Math.abs(endX-this.startX) > Math.abs(endY-this.startY)){
-                if(endX-this.startX>10){
+        computed: {
+            cWidth () {
+                return this.width ? this.width : '375px'
+            },
+            cHeight() {
+                return this.height ? this.height : '300px'
+            }
+        },
+        methods: {
+            slideX (moveX) {
+                if(moveX < 0){
+                    this.curIndex ++;
+                } else if(moveX > 0) {
                     this.curIndex --;
                 }
-                if(endX-this.startX < -10){
-                    this.curIndex ++;
+            }
+        },
+        watch: {
+            curIndex: function(val, oldVal){
+                event.stopPropagation();
+                if(val > oldVal){
+                    this.transitionName = 'slide-right';
+                } else if(val < oldVal) {
+                    this.transitionName = 'slide-left';
                 }
-
-            }
-        }
-    },
-    watch: {
-        curIndex: function(val, oldVal){
-            event.stopPropagation();
-            if(val > oldVal){
-                this.transitionName = 'slide-left';
-            } else if(val < oldVal) {
-                this.transitionName = 'slide-right';
-            }
-            if(val <= -1){
-                this.curIndex = this.imgs.length - 1;
-            }
-            if(val >= this.imgs.length) {
-                this.curIndex = 0;
+                if(val <= -1){
+                    this.curIndex = this.imgs.length - 1;
+                }
+                if(val >= this.imgs.length) {
+                    this.curIndex = 0;
+                }
             }
         }
     }
-}
 </script>
 
 <style scoped>
