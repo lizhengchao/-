@@ -1,10 +1,10 @@
 <template>
     <div>
-        <div @touchstart="touchstart" @touchend="touchend">
+        <slider @slideX="slideX">
             <transition :name="transitionName">
                 <router-view class="main-view"></router-view>
             </transition>
-        </div>
+        </slider>
         <div class="tab-bar">
             <div class="tab-item" v-for="(tab, index) in tabs" @click="onIndex = index">
                 <img class="tab-icon" :src="onIndex == index ? tab.iconOn : tab.icon" >
@@ -15,8 +15,13 @@
 </template>
 
 <script>
+    import Slider from '../../components/slider.vue'
+
     export default {
         name: 'mainTab',
+        components: {
+            Slider
+        },
         data () {
             return {
                 tabs: [
@@ -46,8 +51,6 @@
                     }
                 ],
                 onIndex: 0,
-                startX: 0,
-                startY: 0,
                 transitionName: ''
             }
         },
@@ -69,19 +72,11 @@
             }
         },
         methods: {
-            touchstart (e) {
-                this.startX = e.touches[0].clientX;
-                this.startY = e.touches[0].clientY;
-            },
-            touchend (e) {
-                var moveX = e.changedTouches[0].clientX - this.startX,
-                        moveY = e.changedTouches[0].clientY - this.startY;
-                if(Math.abs(moveX) > Math.abs(moveY)){
-                    if(moveX > 20){
-                        this.onIndex --;
-                    } else if(moveX < -20){
-                        this.onIndex ++;
-                    }
+            slideX (moveX) {
+                if(moveX < 0){
+                    this.onIndex ++;
+                } else if(moveX > 0){
+                    this.onIndex --;
                 }
             }
         }

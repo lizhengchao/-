@@ -1,16 +1,16 @@
 <template>
     <div>
         <titlebar title="新闻公告" hasTouchSearch="true" @touchSearch="touchSearch"></titlebar>
-        <touch @scrollBack="scrollBack">
-            <carousel style="margin: 0 auto" width="375px" height="250px" :imgs="imgs"></carousel>
+        <pulldown @scrollBack="scrollBack">
+            <carousel style="margin: 0 auto" width="100%" height="250px" :imgs="imgs"></carousel>
             <news-item :news="news" v-for="news in newsDatas" key="news.ccode"></news-item>
-        </touch>
+        </pulldown>
     </div>
 </template>
 
 <script>
     import Titlebar from '../../components/titlebar.vue'
-    import Touch from '../../components/touch.vue'
+    import Pulldown from '../../components/pulldown.vue'
     import Carousel from '../../components/carousel.vue'
     import NewsItem from './components/newsItem.vue'
     import axios from 'axios'
@@ -19,7 +19,7 @@
         name: 'news',
         components: {
             Titlebar,
-            Touch,
+            Pulldown,
             Carousel,
             NewsItem
         },

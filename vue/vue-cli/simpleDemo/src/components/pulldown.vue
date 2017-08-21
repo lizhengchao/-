@@ -8,7 +8,7 @@
 
 <script>
     export default {
-        name: 'touch',
+        name: 'pulldown',
         data () {
             return {
                 startX: 0,

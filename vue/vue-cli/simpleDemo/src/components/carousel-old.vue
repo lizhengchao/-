@@ -1,12 +1,11 @@
-<!--利用vue的transition实现左右滑动-->
+<!--使用纯css实现左右滑动-->
 <template>
-    <div class="outer-container" :style="{width: cWidth, height: cHeight}" @touchstart="outerTouchstart" @touchmove="" @touchend="outerTouchend">
-        <router-link :to="imgs[curIndex].href"> <!--由于router-link会转换为<a>，没有高度，会无法触发动画-->
-            <transition-group class="img-container" tag="div" :name="transitionName">
-                <!--transition-group的直接子元素必须有key,transition-group会存在，并替换为一个元素，默认为span，可通过tag设置-->
-                <img v-for="(img, index) in imgs" :key="img.href" v-show="index == curIndex" class="img" :src="img.src">
-            </transition-group>
-        </router-link>
+    <div class="outer-container" :style="{width: cWidth}" @touchstart="outerTouchstart" @touchmove="" @touchend="outerTouchend">
+        <div class="img-container" :style="{width: sumWidth, transform: 'translateX('+translateX+'px)'}">
+            <div class="img-box" :style="{width: imgBoxWidth, height: cHeight}" v-for="img in imgs">
+                <router-link :to="img.href"><img :src="img.src"></router-link>
+            </div>
+        </div>
         <div class="text-container">
             {{imgs[curIndex].text}}
         </div>
@@ -32,15 +31,26 @@ export default {
             curIndex: 0,
             startX: 0,
             startY: 0,
-            transitionName: ''
         }
     },
     computed: {
         cWidth () {
             return this.width ? this.width : '375px'
         },
+        imgBoxWidth () {
+            return this.width.replace('px', '') - 20 + 'px';
+        },
+        sumWidth () {
+            var itemCount = this.imgs.length;
+            return this.width.replace('px', '') * itemCount + 'px';
+        },
         cHeight() {
             return this.height ? this.height : '300px'
+        },
+        translateX () {
+            var width = this.width.replace('px', '');
+
+            return -this.curIndex*(width-10);
         }
     },
     methods: {
@@ -53,9 +63,11 @@ export default {
             var endY = event.changedTouches[0].clientY;
             if(Math.abs(endX-this.startX) > Math.abs(endY-this.startY)){
                 if(endX-this.startX>10){
+                    event.stopPropagation();
                     this.curIndex --;
                 }
                 if(endX-this.startX < -10){
+                    event.stopPropagation();
                     this.curIndex ++;
                 }
 
@@ -64,12 +76,6 @@ export default {
     },
     watch: {
         curIndex: function(val, oldVal){
-            event.stopPropagation();
-            if(val > oldVal){
-                this.transitionName = 'slide-left';
-            } else if(val < oldVal) {
-                this.transitionName = 'slide-right';
-            }
             if(val <= -1){
                 this.curIndex = this.imgs.length - 1;
             }
@@ -83,22 +89,25 @@ export default {
 
 <style scoped>
     .outer-container {
+        width: 100%;
         background-color: #eee;
+        overflow: hidden;
         position: relative;
     }
 
     .img-container {
         margin: 10px 5px;
-        height: 100%;
-        position: relative;
+        transition: transform 0.5s cubic-bezier(0, 0.55, 1, 1)
     }
 
-    .img {
+    .img-box {
+        float: left;
+        margin: 0px 5px
+    }
+
+    .img-box img {
         width: 100%;
         height: 100%;
-        position: absolute;
-        top:0px;
-        left:0px;
     }
 
     .text-container {
