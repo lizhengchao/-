@@ -1,16 +1,17 @@
 <template>
     <div>
-        <router-view class="main-view"></router-view>
+        <div @touchstart="touchstart" @touchend="touchend">
+            <transition :name="transitionName">
+                <router-view class="main-view"></router-view>
+            </transition>
+        </div>
         <div class="tab-bar">
             <div class="tab-item" v-for="(tab, index) in tabs" @click="onIndex = index">
-                <router-link :to="tab.href">
-                    <img class="tab-icon" :src="onIndex == index ? tab.iconOn : tab.icon" >
-                    <p class="tab-text" :class="{'color-on': onIndex == index ? true : false}">{{tab.text}}</p>
-                </router-link>
+                <img class="tab-icon" :src="onIndex == index ? tab.iconOn : tab.icon" >
+                <p class="tab-text" :class="{'color-on': onIndex == index ? true : false}">{{tab.text}}</p>
             </div>
         </div>
     </div>
-
 </template>
 
 <script>
@@ -23,7 +24,7 @@
                         text: '消息',
                         icon:  require('../../assets/main/message.png'),
                         iconOn: require('../../assets/main/message-on.png'),
-                        href: '/'
+                        href: '/message'
                     },
                     {
                         text: '新闻公告',
@@ -35,16 +36,53 @@
                         text: '通讯录',
                         icon:  require('../../assets/main/contact.png'),
                         iconOn: require('../../assets/main/contact-on.png'),
-                        href: '/'
+                        href: '/contact'
                     },
                     {
                         text: '设置',
                         icon:  require('../../assets/main/setting.png'),
                         iconOn: require('../../assets/main/setting-on.png'),
-                        href: '/'
+                        href: '/setting'
                     }
                 ],
-                onIndex: 0
+                onIndex: 0,
+                startX: 0,
+                startY: 0,
+                transitionName: ''
+            }
+        },
+        watch: {
+            onIndex (newValue, oldValue) {
+                var tabLength = this.tabs.length;
+                if(newValue > oldValue) {
+                    this.transitionName = 'slide-right';
+                } else {
+                    this.transitionName = 'slide-left';
+                }
+                if(newValue >= tabLength){
+                    this.onIndex = newValue%tabLength;
+                }
+                else if(newValue < 0) {
+                    this.onIndex = tabLength - 1;
+                }
+                this.$router.push(this.tabs[this.onIndex].href);
+            }
+        },
+        methods: {
+            touchstart (e) {
+                this.startX = e.touches[0].clientX;
+                this.startY = e.touches[0].clientY;
+            },
+            touchend (e) {
+                var moveX = e.changedTouches[0].clientX - this.startX,
+                        moveY = e.changedTouches[0].clientY - this.startY;
+                if(Math.abs(moveX) > Math.abs(moveY)){
+                    if(moveX > 20){
+                        this.onIndex --;
+                    } else if(moveX < -20){
+                        this.onIndex ++;
+                    }
+                }
             }
         }
     }
@@ -53,6 +91,10 @@
 <style scoped>
     .main-view {
         margin-bottom: 50px;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        right: 0px;
     }
 
     .tab-bar {

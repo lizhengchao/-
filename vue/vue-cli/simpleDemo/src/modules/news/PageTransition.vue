@@ -1,7 +1,9 @@
 <template>
-    <transition :name="transitionName">
-        <router-view class="children-view"></router-view>
-    </transition>
+    <div>
+        <transition :name="transitionName">
+            <router-view class="children-view"></router-view>
+        </transition>
+    </div>
 </template>
 
 <script>
@@ -45,49 +47,5 @@
         top:0px;
         left: 0px;
         right: 0px;
-    }
-
-    .slide-right-enter-active, .slide-right-leave-active, .slide-left-enter-active, .slide-left-leave-active {
-        transition: all .8s cubic-bezier(.55,0,.1,1);
-    }
-    .slide-right-enter{
-        transform: translateX(375px);
-    }
-    .slide-right-enter-to {
-        transform: translateX(0px);
-    }
-
-    .slide-right-leave{
-        transform: translateX(0px);
-    }
-    .slide-right-leave-to {
-        transform: translateX(-375px);
-    }
-
-    .slide-left-enter{
-        transform: translateX(-375px);
-    }
-    .slide-left-enter-to {
-        transform: translateX(0px);
-    }
-
-    .slide-left-leave{
-        transform: translateX(0px);
-    }
-    .slide-left-leave-to {
-        transform: translateX(375px);
-    }
-</style>
-
-<style scoped>
-    .slide-top-enter-active, .slide-top-leave-active, .slide-bottom-enter-active, .slide-bottom-leave-active {
-        transition: all .4s cubic-bezier(.55,0,.1,1);
-    }
-    .slide-top-enter, .slide-bottom-leave-to{
-        transform: translateY(100px);
-    }
-    .slide-top-enter-to, .slide-top-leave, .slide-top-leave-to, .slide-bottom-enter,
-    .slide-bottom-enter-to, .slide-bottom-leave{
-        transform: translateY(0px);
     }
 </style>

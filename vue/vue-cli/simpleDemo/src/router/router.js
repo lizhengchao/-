@@ -9,6 +9,9 @@ import PageTransition from '../modules/news/PageTransition.vue'
 import News from '../modules/news/news.vue'
 import NewsDetail from '../modules/news/newsDetail.vue'
 import NewsSearch from '../modules/news/newsSearch.vue'
+import Msglist from '../modules/message/msglist.vue'
+import Contact from '../modules/contact/contact.vue'
+import Setting from '../modules/setting/setting.vue'
 
 Vue.use(VueRouter)
 
@@ -34,6 +37,18 @@ const routes = [
                         component: NewsSearch
                     }
                 ]
+            },
+            {
+                path: '/message',
+                component: Msglist
+            },
+            {
+                path: '/contact',
+                component: Contact,
+            },
+            {
+                path: '/setting',
+                component: Setting
             }
         ]
     }

@@ -1,5 +1,5 @@
 <template>
-    <div class="outer-container" :style="{width: cWidth}" @touchstart="outerTouchstart" @touchend="outerTouchend">
+    <div class="outer-container" :style="{width: cWidth}" @touchstart.stop="outerTouchstart" @touchmove.stop="" @touchend.stop="outerTouchend">
         <div class="img-container" :style="{width: sumWidth, transform: 'translateX('+translateX+'px)'}">
             <div class="img-box" :style="{width: imgBoxWidth, height: cHeight}" v-for="img in imgs">
                 <router-link :to="img.href"><img :src="img.src"></router-link>

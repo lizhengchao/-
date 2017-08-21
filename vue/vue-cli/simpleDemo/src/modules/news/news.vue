@@ -52,7 +52,20 @@
                         href: '/news/detail/5'
                     }
                 ],
-                newsDatas: []
+                newsDatas: [
+                    {
+                        ccode: '001',
+                        readflag: 0,
+                        cname: 'name',
+                        chkdt: '2017-01-02'
+                    },
+                    {
+                        ccode: '002',
+                        readflag: 0,
+                        cname: 'name2',
+                        chkdt: '2017-08-20'
+                    }
+                ]
             }
         },
         mounted () {
@@ -60,7 +73,7 @@
                 method: 'get',
                 url: 'http://218.108.53.116:8081/rest/api/oa/InformList/Get?_dc=1502939263481&optype=all&imgcount=4&pageindex=0&start=0&pagesize=20'
             }).then((res) => {
-                if(res.statusText === 'OK') {
+                if(res.statusText === 'OK' && !res.data.errmsg) {
                     this.newsDatas = res.data.Content;
                 }
             }).catch(function(res){

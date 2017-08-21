@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="outer-container">
         <div class="search-bar-container">
             <div class="search-input-container">
                 <img src="../../assets/search2.png" class="search-img">
@@ -67,6 +67,10 @@
 </script>
 
 <style scoped>
+    .outer-container {
+        background-color: white;
+    }
+
     .search-bar-container {
         padding: 10px;
         display: flex;
@@ -101,7 +105,7 @@
     }
 
     .empty-tip {
-        margin-top: 50px;
+        margin: 50px 0px;
         text-align: center;
     }
 </style>
