@@ -71,6 +71,15 @@
                 this.$router.push(this.tabs[this.onIndex].href);
             }
         },
+        created () {
+            const tabs = this.tabs,
+                    path = this.$route.path;
+            tabs.forEach((tab, index) => {
+                if(tab.href == path) {
+                this.onIndex = index;
+            }
+        })
+        },
         methods: {
             slideX (moveX) {
                 if(moveX < 0){
