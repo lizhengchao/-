@@ -1,12 +1,10 @@
 <!--利用vue的transition实现左右滑动-->
 <template>
     <slider  class="outer-container" :style="{width: cWidth, height: cHeight}" @slideX="slideX">
-        <router-link :to="imgs[curIndex].href"> <!--由于router-link会转换为<a>，没有高度，会无法触发动画-->
-            <transition-group class="img-container" tag="div" :name="transitionName">
-                <!--transition-group的直接子元素必须有key,transition-group会存在，并替换为一个元素，默认为span，可通过tag设置-->
-                <img v-for="(img, index) in imgs" :key="img.href" v-show="index == curIndex" class="img" :src="img.src">
-            </transition-group>
-        </router-link>
+        <transition-group class="img-container" tag="div" :name="transitionName">
+            <!--transition-group的直接子元素必须有key,transition-group会存在，并替换为一个元素，默认为span，可通过tag设置-->
+            <img v-for="(img, index) in imgs" :key="img.src" v-show="index == curIndex" class="img" :src="img.src" @click="imgClick(img)">
+        </transition-group>
         <div class="text-container">
             {{imgs[curIndex].text}}
         </div>
@@ -46,18 +44,28 @@
                 return this.height ? this.height : '300px'
             }
         },
+        created () {
+            var me = this;
+            setInterval(() => {
+                me.curIndex ++;
+            }, 3000);
+        },
         methods: {
-            slideX (moveX) {
+            slideX (moveX, event) {
                 if(moveX < 0){
                     this.curIndex ++;
+                    event.stopPropagation();
                 } else if(moveX > 0) {
                     this.curIndex --;
+                    event.stopPropagation();
                 }
+            },
+            imgClick (curImg) {
+                this.$emit('clickImg', curImg);
             }
         },
         watch: {
             curIndex: function(val, oldVal){
-                event.stopPropagation();
                 if(val > oldVal){
                     this.transitionName = 'slide-right';
                 } else if(val < oldVal) {

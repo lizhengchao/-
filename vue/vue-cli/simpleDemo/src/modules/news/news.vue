@@ -2,8 +2,8 @@
     <div>
         <titlebar title="新闻公告" hasTouchSearch="true" @touchSearch="touchSearch"></titlebar>
         <pulldown @scrollBack="scrollBack">
-            <carousel style="margin: 0 auto" width="100%" height="250px" :imgs="imgs"></carousel>
-            <news-item :news="news" v-for="news in newsDatas" key="news.ccode"></news-item>
+            <carousel style="margin: 0 auto" width="100%" height="250px" :imgs="imgs" @clickImg="clickImg"></carousel>
+            <news-item :news="news" v-for="news in newsDatas" key="news.ccode" @click="clickItem"></news-item>
         </pulldown>
     </div>
 </template>
@@ -29,27 +29,27 @@
                     {
                         src: require('../../assets/test/timg.jpg'),
                         text: 'img1',
-                        href: '/news/detail/1'
+                        ccode: '00000000000000000001'
                     },
                     {
                         src: require('../../assets/test/timg2.jpg'),
                         text: 'img2',
-                        href: '/news/detail/2'
+                        ccode: '00000000000000000002'
                     },
                     {
                         src: require('../../assets/test/timg3.jpg'),
                         text: 'img3',
-                        href: '/news/detail/3'
+                        ccode: '00000000000000000003'
                     },
                     {
                         src: require('../../assets/test/timg4.jpg'),
                         text: 'img4',
-                        href: '/news/detail/4'
+                        ccode: '00000000000000000004'
                     },
                     {
                         src: require('../../assets/test/timg5.jpg'),
                         text: 'img5',
-                        href: '/news/detail/5'
+                        ccode: '00000000000000000005'
                     }
                 ],
                 newsDatas: [
@@ -86,6 +86,17 @@
             },
             scrollBack () {
                 console.info('touch scroll');
+            },
+            clickImg (curImg) {
+                this.enterDetailPage(curImg.text, curImg.ccode);
+            },
+            clickItem (news) {
+                this.enterDetailPage('', news.ccode);
+            },
+            enterDetailPage (title, code) {
+                this.$store.commit('news/detail/setTitle', title);
+                this.$store.commit('news/detail/setCode', code);
+                this.$router.push('/news/detail');
             }
         }
     }

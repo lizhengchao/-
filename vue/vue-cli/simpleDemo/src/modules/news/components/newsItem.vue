@@ -1,12 +1,10 @@
 <template>
-    <div class="news-item">
-        <router-link :to="'/news/detail/' + news.ccode">
-            <div class="li-container">
-                <li v-show="news.readflag == '0'"></li>
-            </div>
-            <div>{{news.cname}}</div>
-            <div class="news-time">{{transformDate(news.chkdt)}}</div>
-        </router-link>
+    <div class="news-item" @click="itemClick">
+        <div class="li-container">
+            <li v-show="news.readflag == '0'"></li>
+        </div>
+        <div>{{news.cname}}</div>
+        <div class="news-time">{{transformDate(news.chkdt)}}</div>
     </div>
 </template>
 
@@ -33,6 +31,9 @@
                 } {
                     return '【' + (date.getMonth() + 1) + '月' + date.getDate() + '日】'
                 }
+            },
+            itemClick () {
+                this.$emit('click', this.news);
             }
         }
     }

@@ -23,11 +23,11 @@
                         moveY = e.changedTouches[0].clientY - this.startY;
                 if(Math.abs(moveX) > Math.abs(moveY)){
                     if(moveX > 20 || moveX < -20){
-                        this.$emit('slideX', moveX);
+                        this.$emit('slideX', moveX, e);
                     }
                 } else if(Math.abs(moveY) > Math.abs(moveX)){
                     if(moveY > 20 || moveY < -20){
-                        this.$emit('slideY', moveY);
+                        this.$emit('slideY', moveY, e);
                     }
                 }
             }

@@ -2,7 +2,7 @@
     <div>
         <titlebar title="新闻公告" :hasTouchSearch="false"></titlebar>
         <div class="title">
-            {{detailInfo.typename}}
+            {{title}}
         </div>
         <div class="desc"><pre>{{detailInfo.typename + '  ' + detailInfo.fillname + '  ' +  this.$route.params.id}}
         </pre></div>
@@ -21,13 +21,17 @@
         },
         data () {
             return {
-                detailInfo: {}
+                detailInfo: {},
+                title: ''
             }
         },
         mounted () {
+            var code = this.$store.state.news.detail.code;
+            this.title = this.$store.state.news.detail.title;
+
             axios({
                 method: 'get',
-                url: 'http://218.108.53.116:8081/rest/API/OA/InformDetail/Get?ccode=' + this.$route.params.id
+                url: 'http://218.108.53.116:8081/rest/API/OA/InformDetail/Get?ccode=' + code
             }).then((resp) => {
                 if(resp.statusText == 'OK'){
                     this.detailInfo = resp.data;

@@ -13,7 +13,7 @@ const store = new Vuex.Store({
         news: {
             namespaced: true,
             modules: {
-                newsDetail: newDetail
+                detail: newDetail
             }
         }
     }

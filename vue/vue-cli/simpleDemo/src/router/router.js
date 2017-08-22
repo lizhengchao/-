@@ -29,7 +29,7 @@ const routes = [
                         component: News
                     },
                     {
-                        path: 'detail/:id',
+                        path: 'detail',
                         component: NewsDetail
                     },
                     {
