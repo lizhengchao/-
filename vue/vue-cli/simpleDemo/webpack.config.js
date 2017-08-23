@@ -1,12 +1,13 @@
 var path = require('path')
 var webpack = require('webpack')
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: './src/main.js',
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
-    filename: 'build.js'
+    filename: 'build-[hash].js'
   },
   module: {
     rules: [
@@ -71,6 +72,9 @@ if (process.env.NODE_ENV === 'production') {
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: true
-    })
+    }),
+    new HtmlWebpackPlugin({
+      template: __dirname + "/src/index.tmpl.html"//new 一个这个插件的实例，并传入相关的参数
+    }),
   ])
 }
