@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #container {
+            height: 200px;
+            width: 100px;
+            background-color: #004444;
+        }
+        #center {
+            height: 150px;
+            width: 75px;
+            background-color: #00d4b4;
+        }
+        #content {
+            height: 100px;
+            width: 50px;
+            background-color: #006600;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <div id="center">
+        <div id="content"></div>
+    </div>
+</div>
+<script>
+    var container = document.getElementById("container"),
+            center = document.getElementById("center"),
+            content = document.getElementById("content");
+    container.addEventListener("click", function(e){
+        debugger;
+        console.log("this is pop click event by container");
+    })
+    container.addEventListener("click", function(e){
+        console.log("this is catch click event by container");
+//        e.stopPropagation(); //停止事情继续传递，包括捕获和冒泡
+//        e.preventDefault(); //阻止事件默认行为，例如点击<a>的默认行为是打开一个新网页
+    }, true);
+
+    center.addEventListener("click", function(e){
+        console.log("this is pop click event by center");
+    })
+    center.addEventListener("click", function(e){
+        console.log("this is catch click event by center");
+    }, true);
+
+    content.addEventListener("click", function(e){
+        console.log("this is pop click event by content");
+    })
+    content.addEventListener("click", function(e){
+        console.log("this is catch click event by content");
+    }, true);
+
+    /*
+     点击最内层div
+     this is catch click event by container
+     this is catch click event by center
+     this is pop click event by content
+     this is catch click event by content
+     this is pop click event by center
+     this is pop click event by container*/
+
+    /*
+        如果将center长高设置为0，点击content仍会触发center，直接体现了事件的传递
+    */
+</script>
+</body>
+</html>

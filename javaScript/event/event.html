@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body style="height: 2000px">
+<div id="focusDiv">测试focus
+    <input id="focusInput" type="text" placeholder="测试focus">
+</div>
+<div id="move1">测试mouseover、mouseout</div>
+<div id="move2">测试mouseover、mouseout</div>
+<div id="touchDiv" style="height: 700px; background-color: red"></div>
+
+<script type="text/javascript" src="EventUtil.js"></script>
+<script type="text/javascript">
+    (function(){
+        var focusDiv = document.getElementById('focusDiv'),
+                focusInput = document.getElementById('focusInput'),
+                move1 = document.getElementById('move1'),
+                move2 = document.getElementById('move2'),
+                touchDiv = document.getElementById('touchDiv');
+        EventUtil.addHandler(focusDiv, 'focus', function(){
+            alert(this.type);
+        })
+        EventUtil.addHandler(focusInput, 'focus', function(event){
+            console.info(event.type);
+        })
+
+        EventUtil.addHandler(move1, 'mouseover', function(event){
+            console.info('moveDiv1 mouseover');
+        })
+        EventUtil.addHandler(move2, 'mouseover', function(event){
+            console.info('moveDiv2 mouseover');
+        })
+        EventUtil.addHandler(touchDiv, 'touchmove', function(e){
+            e.preventDefault(); //可阻止页面滚动
+        })
+    })()
+</script>
+</body>
+</html>
