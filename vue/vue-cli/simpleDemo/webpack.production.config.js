@@ -5,9 +5,9 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   entry: './src/main.js',
   output: {
-    path: path.resolve(__dirname, './dist'),
+    path: path.resolve(__dirname, './product'),
     publicPath: '',
-    filename: 'build.js'
+    filename: 'build-[hash].js'
   },
   module: {
     rules: [
@@ -45,18 +45,15 @@ module.exports = {
       'vue$': 'vue/dist/vue.esm.js'
     }
   },
-  devServer: {
-    contentBase: './dist',
-    historyApiFallback: true,
-    noInfo: true
-  },
   performance: {
     hints: false
   },
-  devtool: '#eval-source-map',
+  devtool: '#source-map',
   plugins: [
-    new HtmlWebpackPlugin({
-      template: __dirname + "/src/index.tmpl.html"//new 一个这个插件的实例，并传入相关的参数
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: '"production"'
+      }
     }),
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true,
@@ -66,6 +63,9 @@ module.exports = {
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: true
+    }),
+    new HtmlWebpackPlugin({
+      template: __dirname + "/src/index.tmpl.html"//new 一个这个插件的实例，并传入相关的参数
     }),
   ]
 }

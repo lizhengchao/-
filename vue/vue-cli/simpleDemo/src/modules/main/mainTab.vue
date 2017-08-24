@@ -38,21 +38,21 @@
                         href: '/news/list'
                     },
                     {
-                        text: '通讯录',
+                        text: '通讯录12',
                         icon:  require('../../assets/main/contact.png'),
                         iconOn: require('../../assets/main/contact-on.png'),
                         href: '/contact'
                     },
                     {
-                        text: '设置',
+                        text: '设置13',
                         icon:  require('../../assets/main/setting.png'),
                         iconOn: require('../../assets/main/setting-on.png'),
                         href: '/setting'
                     },
                     {
                         text: '日历',
-                        icon:  require('../../assets/main/calender.jpg'),
-                        iconOn: require('../../assets/main/calender-on.jpg'),
+                        icon:  require('../../assets/main/contact.png'),
+                        iconOn: require('../../assets/main/contact-on.png'),
                         href: '/calender'
                     },
                 ],
