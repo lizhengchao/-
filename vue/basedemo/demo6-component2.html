@@ -20,10 +20,13 @@ Vue 组件的 API 来自三部分 - props, events 和 slots ：
     <!--非props属性会设置在组件的根元素，一般属性会覆盖，style和class则会合并-->
     <my-row :row-text="text" :is-show-length="false"></my-row>
 
-    <my-button style="margin-top: 100px" v-on:add="add">
+    <my-button style="margin-top: 100px" v-on:add="add" ref="button"> <!-- ref子组件索引，可在父组件中找到子组件 -->
         <p style="width: 20px; height: 20px; background-color: red"></p>
     </my-button>
     <div>{{total}}</div>
+
+    <p>动态组件</p>
+    <component :is="componentName"></component>
 </div>
 
 <script type="text/javascript">
@@ -32,6 +35,7 @@ Vue 组件的 API 来自三部分 - props, events 和 slots ：
         data: {
             text: '',
             total: 0,
+            componentName: 'my-row'
         },
         methods: {
             add: function(){
@@ -59,6 +63,9 @@ Vue 组件的 API 来自三部分 - props, events 和 slots ：
             }
         }
     })
+
+    var button = app.$refs.button;
+
 </script>
 </body>
 </html>

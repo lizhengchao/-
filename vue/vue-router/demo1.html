@@ -14,31 +14,122 @@
 <div id="app">
     <h1>Hello</h1>
     <p>
-        <router-link to="/foo">Go to foo</router-link>
-        <router-link to="/bar">Go to bar</router-link>
+        <router-link to="/foo">foo</router-link>
+        <router-link to="/bar">bar</router-link>
+        <router-link :to="link1">{{link1}}</router-link> <!-- 动态路由 -->
+        <router-link :to="link2">{{link2}}</router-link>
+        <router-link to="/parent/child">包含子路径</router-link> <!-- 嵌套路由 -->
     </p>
-    <router-view></router-view>
-    <p>
-        <router-link to="/foo2">Go to foo2</router-link>
-    </p>
-
+    <transition>
+        <router-view name="part1"></router-view> <!-- 多个router-view -->
+        <router-view name="part2"></router-view>
+    </transition>
+    <div>
+        <button @click="pushFoo">进入/foo</button>
+        <button @click="pushLink">进入动态路由/button/lzcccc</button>
+        <button @click="replaceBar">替换为bar</button>
+        <button @click="back">回退</button>
+    </div>
 </div>
 <script type="text/javascript">
+    const button = Vue.component('my-button', {
+        props: {    //props一般为驼峰风格
+            'rowText': '',
+            isShowLength: Boolean
+        },
+        template: '<div class="children-class">text: {{rowText}}<template v-if="isShowLength"> textLength: {{rowText.length}}</template> </div>'
+    })
+
     const Foo = {template: '<div>foo</div>'};
     const Bar = {template: '<div>bar</div>'};
-    const Foo2 = {template: '<div>foo2</div>'}
+    const Button = {template: '<my-button :row-text="$route.params.id" :is-show-length="false"></my-button>'};
+    const parent = {template: '<div style="height: 100px; width: 200px; background-color: red"><router-view></router-view></div>'};
+    const children = { template: '<div style="height: 50px; width: 100px; background-color: green"></div>'}
 
     const routes = [
-        { path: '/foo', component: Foo},
-        { path: '/bar', component: Bar},
-        { path: '/foo2', component: Foo2}
+        { path: '/foo', components: {
+            part1: Foo, part2: Foo
+        }},
+        { path: '/bar', components: {
+            part1: Bar
+        }},
+        {
+            path: '/button/:id',
+            name: 'button',
+            components: {
+                part1: Button
+            }
+        },
+        {
+            path: '/parent',
+            components: { part1: parent},
+            children: [
+                {
+                    path: 'child',
+                    component: children
+                }
+            ]
+        }
     ];
 
     const router = new VueRouter({routes: routes});
 
+//    注册全局路由变化钩子函数
+//    router.beforeEach((to, from, next) => {
+//        next();
+//    每个钩子方法接收三个参数：
+//
+//    to: Route: 即将要进入的目标 路由对象
+//
+//    from: Route: 当前导航正要离开的路由
+//
+//    next: Function: 一定要调用该方法来 resolve 这个钩子。执行效果依赖 next 方法的调用参数。
+//
+//    next(): 进行管道中的下一个钩子。如果全部钩子执行完了，则导航的状态就是 confirmed （确认的）。
+//
+//    next(false): 中断当前的导航。如果浏览器的 URL 改变了（可能是用户手动或者浏览器后退按钮），那么 URL 地址会重置到 from 路由对应的地址。
+//
+//    next('/') 或者 next({ path: '/' }): 跳转到一个不同的地址。当前的导航被中断，然后进行一个新的导航。
+//
+//    确保要调用 next 方法，否则钩子就不会被 resolved。
+//    })
+
     const app = new Vue({
-        router: router
-    }).$mount('#app');
+        el: '#app',
+        router: router,
+        data: {
+            link1: '/button/lzc',
+            link2: '/button/lz'
+        },
+        methods: {
+            pushFoo () {
+                this.$router.push('/foo')
+            },
+            pushLink () {
+//                this.$router.push({ path: '/button/lzcccc', })
+                this.$router.push({ name: 'button', params: {id: 'lzcccc'}})
+            },
+            replaceBar () {
+                this.$router.replace('/bar')
+            },
+            back () {
+                this.$router.go(-1)
+                /*
+                // 在浏览器记录中前进一步，等同于 history.forward()
+                 router.go(1)
+
+                 // 后退一步记录，等同于 history.back()
+                 router.go(-1)
+
+                 // 前进 3 步记录
+                 router.go(3)
+
+                 // 如果 history 记录不够用，那就默默地失败呗
+                 router.go(-100)
+                 router.go(100)*/
+        }
+        }
+    });
 </script>
 </body>
 </html>
