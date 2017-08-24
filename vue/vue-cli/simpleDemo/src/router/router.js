@@ -12,6 +12,7 @@ import NewsSearch from '../modules/news/newsSearch.vue'
 import Msglist from '../modules/message/msglist.vue'
 import Contact from '../modules/contact/contact.vue'
 import Setting from '../modules/setting/setting.vue'
+import Calender from '../modules/calender/calender.vue'
 
 Vue.use(VueRouter)
 
@@ -49,6 +50,10 @@ const routes = [
             {
                 path: '/setting',
                 component: Setting
+            },
+            {
+                path: '/calender',
+                component: Calender
             }
         ]
     }

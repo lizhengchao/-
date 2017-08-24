@@ -44,11 +44,16 @@ a {
     transform: translateX(375px);
 }
 
-.slide-top-enter-active, .slide-top-leave-active, .slide-bottom-enter-active, .slide-bottom-leave-active {
+.slide-top-enter-active {
     transition: all .4s cubic-bezier(.55,0,.1,1);
 }
+
+.slide-bottom-leave-active {
+    transition: all .4s cubic-bezier(.55, 0, 1, .1);
+}
+
 .slide-top-enter, .slide-bottom-leave-to{
-    transform: translateY(100px);
+    transform: translateY(300px);
 }
 .slide-top-enter-to, .slide-top-leave, .slide-top-leave-to, .slide-bottom-enter,
 .slide-bottom-enter-to, .slide-bottom-leave{

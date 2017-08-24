@@ -1,5 +1,5 @@
 <template>
-    <div @touchstart="touchstart" @touchend="touchend">
+    <div @touchstart="touchstart" @touchmove="touchmove" @touchend="touchend">
         <slot></slot>
     </div>
 </template>
@@ -17,6 +17,9 @@
             touchstart (e) {
                 this.startX = e.touches[0].clientX;
                 this.startY = e.touches[0].clientY;
+            },
+            touchmove (e) {
+                e.preventDefault();
             },
             touchend (e) {
                 var moveX = e.changedTouches[0].clientX - this.startX,

@@ -6,8 +6,8 @@ module.exports = {
   entry: './src/main.js',
   output: {
     path: path.resolve(__dirname, './dist'),
-    publicPath: '/dist/',
-    filename: 'build-[hash].js'
+    publicPath: '',
+    filename: 'build.js'
   },
   module: {
     rules: [
@@ -46,6 +46,7 @@ module.exports = {
     }
   },
   devServer: {
+    contentBase: './dist',
     historyApiFallback: true,
     noInfo: true
   },

@@ -48,7 +48,13 @@
                         icon:  require('../../assets/main/setting.png'),
                         iconOn: require('../../assets/main/setting-on.png'),
                         href: '/setting'
-                    }
+                    },
+                    {
+                        text: '日历',
+                        icon:  require('../../assets/main/calender.jpg'),
+                        iconOn: require('../../assets/main/calender-on.jpg'),
+                        href: '/calender'
+                    },
                 ],
                 onIndex: 0,
                 transitionName: ''

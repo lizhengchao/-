@@ -68,6 +68,7 @@
 
 <style scoped>
     .outer-container {
+        z-index: 2;
         background-color: white;
     }
 
@@ -105,7 +106,8 @@
     }
 
     .empty-tip {
-        margin: 50px 0px;
+        margin-top: 50px;
         text-align: center;
+        min-height: 1000px;
     }
 </style>

@@ -33,7 +33,8 @@
         data () {
             return {
                 curIndex: 0,
-                transitionName: ''
+                transitionName: '',
+                interval: {} //定时刷新事件
             }
         },
         computed: {
@@ -45,19 +46,22 @@
             }
         },
         created () {
-            var me = this;
-            setInterval(() => {
-                me.curIndex ++;
+            this.interval = setInterval(() => {
+                this.curIndex ++;
             }, 3000);
         },
         methods: {
             slideX (moveX, event) {
-                if(moveX < 0){
+                clearInterval(this.interval);
+                this.interval = setInterval(() => {
                     this.curIndex ++;
+                }, 3000);
+                if(moveX < 0){
                     event.stopPropagation();
+                    this.curIndex ++;
                 } else if(moveX > 0) {
-                    this.curIndex --;
                     event.stopPropagation();
+                    this.curIndex --;
                 }
             },
             imgClick (curImg) {
