@@ -1,6 +1,6 @@
 <template>
     <div>
-        <titlebar title="新闻公告" :hasTouchSearch="false"></titlebar>
+        <titlebar title="新闻公告" :hasTouchBack="true" :hasTouchSearch="false"></titlebar>
         <div class="title">
             {{title}}
         </div>

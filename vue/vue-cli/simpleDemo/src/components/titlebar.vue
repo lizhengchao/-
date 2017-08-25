@@ -1,6 +1,6 @@
 <template>
 <div class="titlebar">
-    <div class="back-btn" @click="touchBack"></div>
+    <div class="back-btn" @click="touchBack" v-show="hasTouchBack"></div>
     <div class="title-text">{{title}}</div>
     <div class="search-btn" @click="touchSearch" v-show="hasTouchSearch"></div>
 </div>
@@ -9,7 +9,7 @@
 <script>
 export default {
     name: 'titlebar',
-    props: ['title', 'hasTouchSearch'],
+    props: ['title', 'hasTouchBack', 'hasTouchSearch'],
     methods: {
         touchBack: function() {
             this.$router.goBack();
@@ -23,30 +23,34 @@ export default {
 
 <style scoped>
     .titlebar {
-        height: 30px;
+        height: 21px;
         padding: 10px;
         text-align: center;
         z-index: 2;
         background-color: white;
+        position: relative;
     }
 
     .back-btn {
+        position: absolute;
+        top:10px;
+        left: 10px;
         height: 21px;
         width: 21px;
-        float: left;
         background: url('../assets/back.png');
         background-size: cover;
     }
 
     .title-text {
-        width: 300px;
-        float: left;
+        text-align: center;
     }
 
     .search-btn {
+        position: absolute;
+        right: 10px;
+        top: 10px;
         height: 21px;
         width: 21px;
-        float: right;
         background: url('../assets/search.png');
         background-size: cover;
     }

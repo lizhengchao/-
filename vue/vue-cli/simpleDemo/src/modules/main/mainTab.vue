@@ -38,13 +38,13 @@
                         href: '/news/list'
                     },
                     {
-                        text: '通讯录12',
+                        text: '通讯录',
                         icon:  require('../../assets/main/contact.png'),
                         iconOn: require('../../assets/main/contact-on.png'),
                         href: '/contact'
                     },
                     {
-                        text: '设置13',
+                        text: '设置',
                         icon:  require('../../assets/main/setting.png'),
                         iconOn: require('../../assets/main/setting-on.png'),
                         href: '/setting'
