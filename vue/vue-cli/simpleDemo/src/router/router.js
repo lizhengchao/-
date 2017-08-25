@@ -50,14 +50,13 @@ const routes = [
             {
                 path: '/setting',
                 component: Setting
-            },
-            {
-                path: '/calender',
-                component: Calender
             }
         ]
-    }
-    
+    },
+    {
+        path: '/calender',
+        component: Calender
+    }   
 ]
 
 VueRouter.prototype.goBack = function() {
