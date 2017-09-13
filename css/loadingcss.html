@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <title>Title</title>
+    <style>
+        /*.container {
+            display: flex;
+            justify-content: space-between;
+            width: 50px;
+            margin: 0 auto;
+        }
+        .circle {
+            height: 10px;
+            width: 10px;
+            background-color: orange;
+            border-radius: 5px;
+            transition: all 0.7s cubic-bezier(0, 0, 0, 0);
+        }
+        .scaleSmall {
+            transform: scale(0.01, 0.01);
+        }
+
+        .scaleRevert {
+            transform: scale(1, 1);
+        }*/
+    </style>
+</head>
+<body>
+<!--<div class="container">-->
+    <!--<div class="circle"></div>-->
+    <!--<div class="circle"></div>-->
+    <!--<div class="circle"></div>-->
+<!--</div>-->
+<script>
+    createStyle();
+    createDom();
+    run();
+    /*创建css样式*/
+    function createStyle(){
+        var css = document.createElement('style'),
+                str ='.container{display:flex;margin:0 auto;width:50px;justify-content:space-between}.circle{width:10px;height:10px;border-radius:5px;background-color:orange;transition:all .7s cubic-bezier(0,0,0,0)}.scaleSmall{transform:scale(.01,.01)}.scaleRevert{transform:scale(1,1)}';
+        css.type='text/css';
+        if(css.styleSheet){         //ie下
+            css.styleSheet.cssText = str;
+        } else {
+            css.innerHTML = str;       //或者写成 nod.appendChild(document.createTextNode(str))
+        }
+        document.getElementsByTagName('head')[0].appendChild(css);
+    }
+
+    /*创建dom*/
+    function createDom() {
+        var dom = document.createElement("div"),
+                body = document.body,
+                firstChild = body.firstChild;
+        dom.innerHTML = '<div class="container"><div class="circle"></div><div class="circle"></div><div class="circle"></div></div>';
+
+        if(firstChild) {
+            body.insertBefore(dom, firstChild);
+        } else {
+            body.appendChild(dom);
+        }
+    }
+
+    /*开始运行*/
+    function run () {
+        var circles = document.getElementsByClassName("circle"),
+                timeouts = 700;
+
+        for(var j=0; j<circles.length; j++){
+            (function(circle) {
+                setTimeout(function() {
+                    for(var i=0; i<100;i++){
+                        setTimeout(function(){
+                            if(circle.getAttribute("class") == "circle" ||
+                                    circle.getAttribute("class") == "circle scaleRevert"){
+                                circle.setAttribute("class", "circle scaleSmall");
+                            } else {
+                                circle.setAttribute("class", "circle scaleRevert");
+                            }
+                        }, i*timeouts);
+                    }
+                }, j*200);
+            })(circles[j])
+        }
+    }
+</script>
+</body>
+</html>
