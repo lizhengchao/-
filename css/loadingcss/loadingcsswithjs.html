@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
-    <title>Title</title>
+    <title>依赖js实现动画</title>
     <style>
         /*.container {
             display: flex;
@@ -40,7 +40,7 @@
     /*创建css样式*/
     function createStyle(){
         var css = document.createElement('style'),
-                str ='.container{display:flex;margin:0 auto;width:50px;justify-content:space-between}.circle{width:10px;height:10px;border-radius:5px;background-color:orange;transition:all .7s cubic-bezier(0,0,0,0)}.scaleSmall{transform:scale(.01,.01)}.scaleRevert{transform:scale(1,1)}';
+                str ='body {margin:0;padding:0}.container{display:flex;margin:0 auto;width:60px;justify-content:space-between}.circle{width:15px;height:15px;border-radius:7.5px;background-color:orange;transition:all .7s cubic-bezier(0,0,0,0)}.scaleSmall{transform:scale(.01,.01)}.scaleRevert{transform:scale(1,1)}';
         css.type='text/css';
         if(css.styleSheet){         //ie下
             css.styleSheet.cssText = str;

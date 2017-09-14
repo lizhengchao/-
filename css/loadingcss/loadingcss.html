@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <title>使用纯css实现动画</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            width: 60px;
+            margin: 0 auto;
+        }
+        .circle {
+            height: 15px;
+            width: 15px;
+            background-color: orange;
+            border-radius: 7.5px;
+            transition: all 0.7s cubic-bezier(0, 0, 0, 0);
+        }
+
+        @keyframes scaleSmall {
+            from {}
+            to {transform: scale(0.01, 0.01)}
+        }
+
+        .scaleSmall {
+            animation: scaleSmall 1s;
+            animation-iteration-count: 10;
+            animation-direction: alternate;
+        }
+
+        .scaleSmall1 {
+            animation: scaleSmall 1s;
+            animation-iteration-count: 100;
+            animation-delay: .2s;
+            animation-direction: alternate;
+        }
+
+        .scaleSmall2 {
+            animation: scaleSmall 1s;
+            animation-iteration-count: 100;
+            animation-delay: .3s;
+            animation-direction: alternate;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="circle scaleSmall"></div>
+    <div class="circle scaleSmall1"></div>
+    <div class="circle scaleSmall2"></div>
+</div>
+</body>
+</html>
