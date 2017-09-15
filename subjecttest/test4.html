@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>纯css实现model</title>
+    <style>
+        .name {
+            color: red;
+        }
+        .name:hover {
+            color: blue
+        }
+        .name:active {
+            color: white
+        }
+        .name:focus {
+            color: black
+        }
+
+        li:hover, li:hover~li {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div class="name">lzc</div>
+<ul>
+    <li>a</li>
+    <li>a</li>
+    <li>a</li>
+    <li>a</li>
+</ul>
+</body>
+</html>
