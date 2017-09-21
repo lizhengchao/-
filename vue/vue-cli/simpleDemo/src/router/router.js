@@ -4,15 +4,16 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import MainTab from '../modules/main/mainTab.vue'
-import PageTransition from '../modules/news/PageTransition.vue'
-import News from '../modules/news/news.vue'
-import NewsDetail from '../modules/news/newsDetail.vue'
-import NewsSearch from '../modules/news/newsSearch.vue'
-import Msglist from '../modules/message/msglist.vue'
-import Contact from '../modules/contact/contact.vue'
-import Setting from '../modules/setting/setting.vue'
-import Calender from '../modules/calender/calender.vue'
+import MainTab from 'modules/main/mainTab.vue'
+import PageTransition from 'modules/news/PageTransition.vue'
+import News from 'modules/news/news.vue'
+import NewsDetail from 'modules/news/newsDetail.vue'
+import NewsSearch from 'modules/news/newsSearch.vue'
+import Msglist from 'modules/message/msglist.vue'
+import Contact from 'modules/contact/contact.vue'
+import Setting from 'modules/setting/setting.vue'
+import EnterCalender from 'modules/calender/enterCalender.vue'
+import Calender from 'modules/calender/calender.vue'
 
 Vue.use(VueRouter)
 
@@ -50,6 +51,10 @@ const routes = [
             {
                 path: '/setting',
                 component: Setting
+            },
+            {
+                path: '/enterCalender',
+                component: EnterCalender
             }
         ]
     },

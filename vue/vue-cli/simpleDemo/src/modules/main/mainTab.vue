@@ -53,7 +53,7 @@
                         text: '日历',
                         icon:  require('../../assets/main/contact.png'),
                         iconOn: require('../../assets/main/contact-on.png'),
-                        href: '/calender'
+                        href: '/enterCalender'
                     },
                 ],
                 onIndex: 0,
