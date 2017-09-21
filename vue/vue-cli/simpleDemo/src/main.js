@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Router from './router/router'
 import Store from './store/store'
-import './main.css'
+import './globalcss/main.css'
 import App from './App.vue'
+import {createTransformStyle} from './init'
 
 new Vue({
   el: '#app',
@@ -13,5 +14,8 @@ new Vue({
   },
   template: '<App></App>',
   methods: {
+  },
+  created () {
+    createTransformStyle();
   }
 })

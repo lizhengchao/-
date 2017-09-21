@@ -1,23 +1,5 @@
-body {
-    margin: 0px;
-}
-
-input {
-    border: none;
-    padding: 0px;
-    outline: none;
-}
-
-a {
-    text-decoration: none;
-    color: black;
-}
-
 .slide-right-enter-active, .slide-right-leave-active, .slide-left-enter-active, .slide-left-leave-active {
     transition: all .4s cubic-bezier(.55,0,.1,1);
-}
-.slide-right-enter{
-    transform: translateX(375px);
 }
 .slide-right-enter-to {
     transform: translateX(0px);
@@ -26,22 +8,12 @@ a {
 .slide-right-leave{
     transform: translateX(0px);
 }
-.slide-right-leave-to {
-    transform: translateX(-375px);
-}
-
-.slide-left-enter{
-    transform: translateX(-375px);
-}
 .slide-left-enter-to {
     transform: translateX(0px);
 }
 
 .slide-left-leave{
     transform: translateX(0px);
-}
-.slide-left-leave-to {
-    transform: translateX(375px);
 }
 
 .slide-top-enter-active {
