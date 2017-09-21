@@ -9,9 +9,9 @@
 </template>
 
 <script>
-    import Titlebar from '../../components/titlebar.vue'
-    import Pulldown from '../../components/pulldown.vue'
-    import Carousel from '../../components/carousel.vue'
+    import Titlebar from 'components/titlebar.vue'
+    import Pulldown from 'components/pulldown.vue'
+    import Carousel from 'components/carousel.vue'
     import NewsItem from './components/newsItem.vue'
     import axios from 'axios'
 

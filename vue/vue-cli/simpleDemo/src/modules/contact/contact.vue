@@ -1,11 +1,18 @@
 <template>
-    <div class="outer-container">
+    <div>
+        <pulldown>
+            <div class="outer-container"></div>
+        </pulldown>
     </div>
 </template>
 
 <script>
+    import pulldown from 'components/pulldown.vue'
     export default {
-        name: 'contact'
+        name: 'contact',
+        components: {
+            pulldown
+        }
     }
 </script>
 
