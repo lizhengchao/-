@@ -35,7 +35,7 @@
                         text: '新闻公告',
                         icon:  require('../../assets/main/work.png'),
                         iconOn: require('../../assets/main/work-on.png'),
-                        href: '/news/list'
+                        href: '/news'
                     },
                     {
                         text: '通讯录',
@@ -80,6 +80,7 @@
         created () {
             const tabs = this.tabs,
                     path = this.$route.path;
+
             tabs.forEach((tab, index) => {
                 if(tab.href == path) {
                 this.onIndex = index;

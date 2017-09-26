@@ -27,6 +27,10 @@ const routes = [
                 component: PageTransition,
                 children: [
                     {
+                        path: '',
+                        component: News
+                    },
+                    {
                         path: 'list',
                         component: News
                     },

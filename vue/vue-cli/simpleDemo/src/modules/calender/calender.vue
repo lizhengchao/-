@@ -93,6 +93,11 @@
             itemClick (index) {
                 this.tapIndex = index;
             }
+        },
+        watch: {
+            tapIndex (newValue, oldValue) {
+
+            }
         }
     }
 </script>

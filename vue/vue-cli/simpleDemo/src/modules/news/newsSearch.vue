@@ -12,7 +12,7 @@
     </div>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
     import NewsItem from './components/newsItem.vue'
     import axios from 'axios'
 
