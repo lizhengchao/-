@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button id="showTap">点击弹出hello</button>
+<script>
+    var showTap = document.getElementById("showTap");
+    showTap.onclick = function() {
+        alert("hello");
+    }
+    setTimeout(function(){
+        alert("time out 2s");
+    }, 2000);
+    return;
+    while(true) {
+
+    }
+</script>
+<script>
+    function a () {
+        console.info("a");
+    }
+    function b(arg0) {
+        console.info("b");
+        setTimeout(() => {arg0 && arg0()}, 0);
+    }
+    b(a);
+    console.info("c");
+</script>
+</body>
+</html>
