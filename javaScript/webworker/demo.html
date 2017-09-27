@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Web Worker demo</title>
+</head>
+<body>
+<button id="stopWorker">停止Worker</button>
+<script type="text/javascript">
+    document.getElementById('stopWorker').onclick = () => {
+        worker.terminate();
+    }
+    if(window.Worker){
+        var worker = new Worker('launch.js');
+        worker.addEventListener('message', function (event) {
+            console.info(event.data);
+        })
+        worker.addEventListener('error', function (event) {
+            console.error(event.message);
+        })
+    } else {
+        alert('your browser not support Web Worker');
+    }
+</script>
+</body>
+</html>
