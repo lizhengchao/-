@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="text/javascript">
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = (e) => {
+        console.info(xhr.readyState);
+        /*
+         0 为初始化——open函数还没调用。
+         1 正在加载——open函数已调用，但send函数没有调用。
+         2 已加载  ——send函数已调用。
+         3 正在交互——服务器正在发送响应。
+         4 完成    ——服务器完成发送响应。
+         */
+    }
+    xhr.open('get', 'http://www.baidu.com', true);
+    xhr.send(); //send是异步方法，卸载onerror,onload前面后面都可
+
+    xhr.onerror = (e) => {
+        console.info('onerror')
+    }
+    xhr.onload = (e) => {
+        console.info('onload')
+    }
+</script>
+</body>
+</html>
