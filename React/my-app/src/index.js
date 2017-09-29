@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-// import App from './App';
-import ClickCount from './counter/ClickCounter';
+import Container from './counter/Container'
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<ClickCount />, document.getElementById('root'));
+ReactDOM.render(<Container />, document.getElementById('root'));
 registerServiceWorker();
