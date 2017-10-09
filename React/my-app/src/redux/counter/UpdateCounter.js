@@ -1,13 +1,13 @@
 /**
  * Created by lzc on 2017/9/28.
  */
-import React, {Component, PropTypes} from 'react'
-import Store from '../Store';
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import * as Action from '../Action';
 
 class UpdateCounter extends  Component {
-    constructor (props) {
-        super(props);
+    constructor (props, context) {
+        super(props, context);
         
         this.incrementCounter = this.incrementCounter.bind(this);
         this.decrementCounter = this.decrementCounter.bind(this);
@@ -16,25 +16,25 @@ class UpdateCounter extends  Component {
     }
 
     getOwnState () {
-        return Store.getState()[this.props.counterCaption]
+        return this.context.store.getState()[this.props.counterCaption]
     }
 
     componentDidMount () {
-        Store.subscribe(() => {
+        this.context.store.subscribe(() => {
             this.setState({count: this.getOwnState()});
         })
     }
 
     componentWillUnmount () {
-        Store.unsubscribe(() => {});
+        this.context.store.unsubscribe(() => {});
     }
 
     incrementCounter () {
-        Store.dispatch(Action.increment(this.props.counterCaption))
+        this.context.store.dispatch(Action.increment(this.props.counterCaption))
     }
     
     decrementCounter () {
-        Store.dispatch(Action.decrement(this.props.counterCaption))
+        this.context.store.dispatch(Action.decrement(this.props.counterCaption))
     }
     
     render () {
@@ -52,6 +52,10 @@ class UpdateCounter extends  Component {
 UpdateCounter.propsType = {
     // onUpdate: PropTypes.func
     counterCaption: PropTypes.string.required
+}
+
+UpdateCounter.contextTypes = {
+    store: PropTypes.object
 }
 
 export default UpdateCounter

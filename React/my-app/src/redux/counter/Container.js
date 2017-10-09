@@ -2,12 +2,13 @@
  * Created by lzc on 2017/9/27.
  */
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import UpdateCounter from './UpdateCounter'
-import Store from '../Store'
+// import Store from '../Store'
 
 class Container extends  Component {
-    constructor (props) {
-        super(props);
+    constructor (props, context) {
+        super(props, context);
 
         this.state = {
             counterName: 'count1',
@@ -16,17 +17,17 @@ class Container extends  Component {
     }
 
     componentDidMount () {
-        Store.subscribe(() => {
+        this.context.store.subscribe(() => {
             this.setState({sumCount: this.getOwnState()})
         })
     }
 
     componentWillUnmount () {
-        Store.unsubscribe(() => {})
+        this.context.store.unsubscribe(() => {})
     }
 
     getOwnState () {
-        var state = Store.getState(),
+        var state = this.context.store.getState(),
             sumCounter = 0;
         for (var i in state){
             sumCounter += state[i];
@@ -45,6 +46,10 @@ class Container extends  Component {
             </div>
         )
     }
+}
+
+Container.contextTypes = {
+    store: PropTypes.object
 }
 
 export default Container
