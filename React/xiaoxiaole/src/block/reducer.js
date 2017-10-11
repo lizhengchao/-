@@ -4,10 +4,11 @@
 import * as ActionTypes from './actionTypes'
 
 export default (state, action) => {
-    switch (action.type) {
+    const {type, rowNumber, lineNumber, newStatus} = action;
+    switch (type) {
         case ActionTypes.UPDATEBLOCKSTATUS:
             const newState = Object.assign({}, state);
-            newState.blockStatus[action.rowNumber][action.lineNumber] = action.newStatus;
+            newState.blockStatus[rowNumber][lineNumber] = newStatus;
             return newState;
         default:
             return state;
