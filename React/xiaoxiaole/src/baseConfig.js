@@ -10,15 +10,12 @@ export const BLOCK_TYPES = {
     BLUE: 'blue',
     RED: 'red',
     ORANGE: 'orange',
-    WHITE: 'white',
+    GREEN: 'green',
     BLACK: 'black'
 };
 
 //获取随机的方块类型
 export function getRandomType () {
-    if(typeof BLOCK_TYPES !== 'object'){
-        throw 'block types must be an object';
-    }
     let typeCount = 0,
         typeArr = [];
     for(let i in BLOCK_TYPES){

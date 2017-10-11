@@ -1,0 +1,7 @@
+.block {
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    float: left;
+    margin: 5px;
+}
