@@ -19,18 +19,63 @@ class Block extends Component {
         this.touchEndX = 0;
         this.touchEndY = 0;
 
+        this.transform = 'translate(0px, 0px)';
+        this.transition= 'transform 0.5s';
+
         this.state = {
             color: this.getColorByStatus(props.status),
+            animation: ''
         }
     }
 
     componentWillReceiveProps (nextProps) {
-        this.setState({color: this.getColorByStatus(nextProps.status)});
+        this.setState({animation: nextProps.animation});
+        if(this.getColorByStatus(nextProps.status) !== this.state.color) {
+            setTimeout(() => { //等待动画完成后再更新颜色
+                this.setState({
+                    color: this.getColorByStatus(nextProps.status,),
+                    animation: ''
+                });
+            }, 500);
+        }
+    }
+
+    shouldComponentUpdate (nextProps, nextState) {
+        if(this.getColorByStatus(nextProps.status) === this.state.color){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    componentWillUpdate (nextProps, nextState) {
+        switch (nextState.animation){
+            case 'left':
+                this.transition = 'transform 0.5s';
+                this.transform = 'translate(-35px, 0px)';
+                break;
+            case 'right':
+                this.transition = 'transform 0.5s';
+                this.transform = 'translate(35px, 0px)';
+                break;
+            case 'up':
+                this.transition = 'transform 0.5s';
+                this.transform = 'translate(0px, -35px)';
+                break;
+            case 'down':
+                this.transition = 'transform 0.5s';
+                this.transform = 'translate(0px, 35px)';
+                break;
+            default:
+                this.transition = 'transform 0s';
+                this.transform = '';
+        }
     }
 
     render () {
+        console.info('render block');
         return (
-            <div className="block" style={{'backgroundColor': this.state.color}}
+            <div className="block" style={{'backgroundColor': this.state.color, transform: this.transform, transition: this.transition}}
                  onTouchStart={this.touchStart} onTouchMove={this.touchMove} onTouchEnd={this.touchEnd}></div>
         )
     }
@@ -79,7 +124,8 @@ Block.propTypes = {
     status: PropTypes.string,
     line: PropTypes.number,
     row: PropTypes.number,
-    move: PropTypes.fun
+    move: PropTypes.func,
+    animation: PropTypes.string //如果有该参数则说明需要做动画
 }
 
 export default Block;

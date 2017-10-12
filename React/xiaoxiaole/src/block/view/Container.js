@@ -15,7 +15,14 @@ class Container extends Component {
         this.blockMove = this.blockMove.bind(this);
 
         this.state = {
-            blockStatus: this.getOwnState()
+            blockStatus: this.getOwnState(),
+            moveBlocks: [   //需要加入动画的特殊块
+                /*{
+                    row: 0,
+                    line: 0,
+                    moveAnimation: ''
+                }*/
+            ]
         }
     }
 
@@ -30,7 +37,21 @@ class Container extends Component {
     }
     
     blockMove ({row, line, moveType}) {
-        let swapBlock = (rowA, lineA, rowB, lineB) => {
+        var swapBlock = (rowA, lineA, moveA, rowB, lineB, moveB) => {
+            var moveBlocks = [];
+            moveBlocks.push({
+                row: rowA,
+                line: lineA,
+                moveAnimation: moveA
+            },{
+                row: rowB,
+                line: lineB,
+                moveAnimation: moveB
+            });
+            this.setState({
+                moveBlocks: moveBlocks
+            });
+
             var colorA = this.getOwnState()[rowA][lineA],
                 colorB = this.getOwnState()[rowB][lineB];
 
@@ -40,17 +61,18 @@ class Container extends Component {
 
         switch (moveType) {
             case 'left':
-                swapBlock(row, line, row, line-1);
+                swapBlock(row, line, 'left', row, line-1, 'right');
                 break;
             case 'right':
-                swapBlock(row, line, row, line+1);
+                swapBlock(row, line, 'right', row, line+1, 'left');
                 break;
             case  'up':
-                swapBlock(row, line, row-1, line);
+                swapBlock(row, line, 'up', row-1, line, 'down');
                 break;
             case 'down':
-                swapBlock(row, line, row+1, line);
+                swapBlock(row, line, 'down', row+1, line, 'up');
                 break;
+            default:
         }
     }
 
@@ -59,13 +81,26 @@ class Container extends Component {
         console.info('render container');
         const blockStatus = this.state.blockStatus;
         var blocks = [],
-            rowBlock;
+            rowBlock,
+            getBlocks = (row, line, status) => {
+                let moveBlocks = this.state.moveBlocks;
+                for(let moveBlock of moveBlocks) {
+                    if(moveBlock.row == row && moveBlock.line == line){ //如果是特殊块则需要增加动画属性
+                        return (
+                            <Block key={line}  status={status} animation={moveBlock.moveAnimation}
+                                       row={parseInt(row, 10)} line={parseInt(line, 10)} move={this.blockMove}/>
+                        )
+                    }
+                }
+                return (
+                    <Block key={line}  status={status} row={parseInt(row, 10)} line={parseInt(line, 10)} move={this.blockMove}/>
+                )
+            }
 
         for(let row in blockStatus) {
             rowBlock = [];
             for(let line in blockStatus[row]){
-                rowBlock.push(<Block key={line}  status={blockStatus[row][line]} 
-                                     row={parseInt(row)} line={parseInt(line)} move={this.blockMove}/>)
+                rowBlock.push(getBlocks(row, line, blockStatus[row][line]));
             }
             rowBlock = (<div key={row} className="row">{rowBlock}</div>);
             blocks.push(rowBlock);
