@@ -22,6 +22,8 @@ class Block extends Component {
         this.transform = 'translate(0px, 0px)';
         this.transition= 'transform 0.5s';
 
+        this.animationQueue = []; //当前块的动画队列
+
         this.state = {
             color: this.getColorByStatus(props.status),
             animation: ''
@@ -29,19 +31,50 @@ class Block extends Component {
     }
 
     componentWillReceiveProps (nextProps) {
-        this.setState({animation: nextProps.animation});
+        if(this.state.animation != (typeof nextProps.animation == 'undefined' ? '' : nextProps.animation)){
+            this.setState({animation: nextProps.animation});
+            setTimeout(() => { //等待动画完成后移动回原本的位置
+                this.setState({animation: ''});
+            }, 500);
+
+        }
         if(this.getColorByStatus(nextProps.status) !== this.state.color) {
             setTimeout(() => { //等待动画完成后再更新颜色
-                this.setState({
-                    color: this.getColorByStatus(nextProps.status,),
-                    animation: ''
-                });
+                this.setState({color: this.getColorByStatus(nextProps.status,)});
             }, 500);
+        }
+
+        // let pushAnimation = (newAnimation) => {
+        //     switch (newAnimation.type) {
+        //         case 'setColor':
+        //             break;
+        //         case 'setTimeout':
+        //             break;
+        //         case 'move':
+        //             break;
+        //         case 'disappear':
+        //             break;
+        //         default:
+        //     }
+        // };
+
+        if(!nextProps.newAnimation){
+            return;
+        } else if(nextProps.newAnimation.constructor === Array){
+            //如果是数组则说明是多个动画
+            nextProps.newAnimation.forEach((newAnimation) => {
+                this.animationQueue.push(newAnimation);
+                this.setState({});
+            })
+        } else {
+            this.animationQueue.push(nextProps.newAnimation);
+            this.setState({});
         }
     }
 
     shouldComponentUpdate (nextProps, nextState) {
-        if(this.getColorByStatus(nextProps.status) === this.state.color){
+        if(this.getColorByStatus(nextProps.status) === this.state.color &&
+            nextState.animation === this.state.animation){
             return false;
         } else {
             return true;
@@ -49,6 +82,7 @@ class Block extends Component {
     }
 
     componentWillUpdate (nextProps, nextState) {
+
         switch (nextState.animation){
             case 'left':
                 this.transition = 'transform 0.5s';
@@ -95,7 +129,7 @@ class Block extends Component {
     }
 
     touchEnd (e) {
-        //返回滑动的方向和所在位置
+        //告诉外部组件滑动的方向和自己所属的位置
         let touchMoveX = this.touchEndX - this.touchStartX,
             touchMoveY = this.touchEndY - this.touchStartY,
             moveType = '';
@@ -112,7 +146,7 @@ class Block extends Component {
                 moveType = 'up';
             }
         }
-        this.props.move({
+        this.props.touch({
             row: this.props.row, 
             line: this.props.line, 
             moveType: moveType
@@ -124,8 +158,9 @@ Block.propTypes = {
     status: PropTypes.string,
     line: PropTypes.number,
     row: PropTypes.number,
-    move: PropTypes.func,
-    animation: PropTypes.string //如果有该参数则说明需要做动画
+    touch: PropTypes.func,
+    animation: PropTypes.string, //如果有该参数则说明需要做动画
+    newAnimation: PropTypes.object  //接下来要完成的新动画
 }
 
 export default Block;
