@@ -6,7 +6,9 @@ import * as baseConfig from './baseConfig'
 import BlockReducer from './block/reducer'
 
 const initData = {
-    blockStatus: []
+    blockStatus: [],
+    needClearBlocks: [],
+    type: '' //记录action type
 };
 
 //initialize data

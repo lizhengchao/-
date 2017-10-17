@@ -9,6 +9,7 @@ class Block extends Component {
     constructor (props, context) {
         super(props, context);
 
+        this.dealAnimations = this.dealAnimations.bind(this);
         this.getColorByStatus = this.getColorByStatus.bind(this);
         this.touchStart = this.touchStart.bind(this);
         this.touchMove = this.touchMove.bind(this);
@@ -42,97 +43,8 @@ class Block extends Component {
             this.animationQueue.push(nextProps.newAnimation);
         }
 
-        let dealAnimations = () => {
-            let  dealColor = (animation) => {
-                    this.setState({
-                        color: animation.color
-                    });
-                    dealAnimations();
-                },
-            /*animation.moveType: 移动的方向
-            * animation.moveNumber: 移动几格*/
-                dealMove = (animation) => {
-                    if(typeof animation.moveNumber == 'undefined'){animation.moveNumber = 1}
-                    let moveLength = animation.moveNumber * (parseInt(this.context.baseConfig.BLOCK_RADIUS*2)+
-                        parseInt(this.context.baseConfig.BLOCK_SPACE));
-                    switch (animation.moveType){
-                        case 'left':
-                            this.setState({
-                                transition: 'transform 0.5s',
-                                transform: 'translate(-'+moveLength+'px, 0px)'
-                            });
-                            break;
-                        case 'right':
-                            this.setState({
-                                transition: 'transform 0.5s',
-                                transform: 'translate('+moveLength+'px, 0px)'
-                            });
-                            break;
-                        case 'up':
-                            this.setState({
-                                transition: 'transform 0.5s',
-                                transform: 'translate(0px, -'+moveLength+'px)'
-                            });
-                            break;
-                        case 'down':
-                            this.setState({
-                                transition: 'transform 0.5s',
-                                transform: 'translate(0px, '+moveLength+'px)'
-                            });
-                            break;
-                        default:
-                            this.setState({
-                                transition: 'transform 0s',
-                                transform: ''
-                            });
-                    }
-                    setTimeout(()=> {
-                        this.isStop = true;
-                    }, 0);
-                    setTimeout(() => {
-                        this.isStop = false;
-                        this.setState({
-                            transition: 'transform 0',
-                            transform: ''
-                        });
-                        dealAnimations();
-                    }, 500);
-                },
-                dealDisappear = () => {
-                    this.setState({
-                        opacity: '0',
-                        transition: 'opacity 0.5s'
-                    });
-                    setTimeout(()=>{
-                        this.isStop = true;
-                    },0);
-                    setTimeout(() => {
-                        this.isStop = false;
-                        this.setState({
-                            opacity: '1',
-                            transition: 'opacity 0s'
-                        });
-                        dealAnimations();
-                    }, 500);
-                },
-                curAnimation = this.animationQueue.shift();
-                if(curAnimation) {
-                    switch (curAnimation.type) {
-                        case 'setColor': //更新颜色
-                            dealColor(curAnimation);
-                            break;
-                        case 'move':
-                            dealMove(curAnimation);
-                            break;
-                        case 'disappear':
-                            dealDisappear();
-                            break;
-                        default:
-                    }
-                }
-            };
         if(!this.isStop){
-            dealAnimations();
+            this.dealAnimations();
         }
     }
 
@@ -155,6 +67,96 @@ class Block extends Component {
                  onTouchStart={this.touchStart} onTouchMove={this.touchMove} onTouchEnd={this.touchEnd}></div>
         )
     }
+
+    dealAnimations () {
+        let  dealColor = (animation) => {
+                this.setState({
+                    color: animation.color
+                });
+                this.dealAnimations();
+            },
+        /*animation.moveType: 移动的方向
+         * animation.moveNumber: 移动几格*/
+            dealMove = (animation) => {
+                if(typeof animation.moveNumber == 'undefined'){animation.moveNumber = 1}
+                let moveLength = animation.moveNumber * (parseInt(this.context.baseConfig.BLOCK_RADIUS*2)+
+                    parseInt(this.context.baseConfig.BLOCK_SPACE));
+                switch (animation.moveType){
+                    case 'left':
+                        this.setState({
+                            transition: 'transform 0.5s',
+                            transform: 'translate(-'+moveLength+'px, 0px)'
+                        });
+                        break;
+                    case 'right':
+                        this.setState({
+                            transition: 'transform 0.5s',
+                            transform: 'translate('+moveLength+'px, 0px)'
+                        });
+                        break;
+                    case 'up':
+                        this.setState({
+                            transition: 'transform 0.5s',
+                            transform: 'translate(0px, -'+moveLength+'px)'
+                        });
+                        break;
+                    case 'down':
+                        this.setState({
+                            transition: 'transform 0.5s',
+                            transform: 'translate(0px, '+moveLength+'px)'
+                        });
+                        break;
+                    default:
+                        this.setState({
+                            transition: 'transform 0s',
+                            transform: ''
+                        });
+                }
+                setTimeout(()=> {
+                    this.isStop = true;
+                }, 0);
+                setTimeout(() => {
+                    this.isStop = false;
+                    this.setState({
+                        transition: 'transform 0s',
+                        transform: ''
+                    });
+                    this.dealAnimations();
+                }, 500);
+            },
+            dealDisappear = () => {
+                this.setState({
+                    opacity: '0',
+                    transition: 'opacity 2s'
+                });
+                setTimeout(()=>{
+                    this.isStop = true;
+                },0);
+                setTimeout(() => {
+                    this.isStop = false;
+                    this.setState({
+                        opacity: '1',
+                        transition: 'opacity 0s'
+                    });
+                    this.dealAnimations();
+                }, 2000);
+            },
+            curAnimation = this.animationQueue.shift();
+        if(curAnimation) {
+            switch (curAnimation.type) {
+                case 'setColor': //更新颜色
+                    dealColor(curAnimation);
+                    break;
+                case 'move':
+                    dealMove(curAnimation);
+                    break;
+                case 'disappear':
+                    dealDisappear();
+                    break;
+                default:
+            }
+        }
+    };
 
     getColorByStatus (status) {
         return status;

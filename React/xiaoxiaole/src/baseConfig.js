@@ -14,6 +14,9 @@ export const BLOCK_TYPES = {
     BLACK: 'black'
 };
 
+export const BLOCK_RADIUS = '12.5'; //方块的半径
+export const BLOCK_SPACE = '10'; //方块的间距
+
 //获取随机的方块类型
 export function getRandomType () {
     let typeCount = 0,
@@ -28,3 +31,5 @@ export function getRandomType () {
     let randomTypeNumber = Math.floor(Math.random()*typeCount);
     return BLOCK_TYPES[typeArr[randomTypeNumber]];
 }
+
+export const CLEAR_NUMBER = 3; //一排有多少个时会做消除

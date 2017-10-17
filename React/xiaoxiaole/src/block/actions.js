@@ -11,3 +11,17 @@ export const updateBlockStatus = (rowNumber, lineNumber, newStatus)=> {
         newStatus
     }
 }
+
+export const fullUpdateBlokStatus = (newBlockStatus) => {
+    return {
+        type: ActionTypes.FULLUPDATEBLOCKSTATUS,
+        newBlockStatus
+    }
+}
+
+export const addNeedClearBlocks = (needClearBlocks) => {
+    return {
+        type: ActionTypes.ADDNEEDCLEARBLOCKS,
+        needClearBlocks
+    }
+}
