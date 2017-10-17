@@ -108,7 +108,7 @@ class Container extends Component {
                 }
 
                 if(needClearBlocks.length > 0 && needClearBlocks[row][line].needClear) {
-                    newAnimation.push({type: 'disappear'});
+                    newAnimation.push(...[newAnimation.length > 0 ? {} : {type: 'timeout', time: 500}, {type: 'disappear'}]);
                 }
 
                 return (

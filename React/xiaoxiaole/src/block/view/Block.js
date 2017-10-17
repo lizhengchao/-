@@ -49,7 +49,9 @@ class Block extends Component {
     }
 
     shouldComponentUpdate (nextProps, nextState) {
-        if(nextProps.newAnimation &&!this.isStop){
+        if((nextProps.newAnimation.constructor === Object ||
+            (nextProps.newAnimation.constructor === Array && nextProps.newAnimation.length > 0))
+            &&!this.isStop){
             return true;
         } else {
             return false;
@@ -69,19 +71,19 @@ class Block extends Component {
     }
 
     dealAnimations () {
-        let  dealColor = (animation) => {
+        let  dealColor = ({color}) => {
                 this.setState({
-                    color: animation.color
+                    color: color
                 });
                 this.dealAnimations();
             },
         /*animation.moveType: 移动的方向
          * animation.moveNumber: 移动几格*/
-            dealMove = (animation) => {
-                if(typeof animation.moveNumber == 'undefined'){animation.moveNumber = 1}
-                let moveLength = animation.moveNumber * (parseInt(this.context.baseConfig.BLOCK_RADIUS*2)+
+            dealMove = ({moveNumber, moveType}) => {
+                if(typeof moveNumber == 'undefined'){moveNumber = 1}
+                let moveLength = moveNumber * (parseInt(this.context.baseConfig.BLOCK_RADIUS*2)+
                     parseInt(this.context.baseConfig.BLOCK_SPACE));
-                switch (animation.moveType){
+                switch (moveType){
                     case 'left':
                         this.setState({
                             transition: 'transform 0.5s',
@@ -141,6 +143,13 @@ class Block extends Component {
                     this.dealAnimations();
                 }, 2000);
             },
+            dealTimeout = ({time}) => {
+                this.isStop = true;
+                setTimeout(()=> {
+                    this.isStop = false;
+                    this.dealAnimations();
+                }, time);
+            },
             curAnimation = this.animationQueue.shift();
         if(curAnimation) {
             switch (curAnimation.type) {
@@ -153,7 +162,11 @@ class Block extends Component {
                 case 'disappear':
                     dealDisappear();
                     break;
+                case 'timeout':
+                    dealTimeout(curAnimation);
+                    break;
                 default:
+                    this.dealAnimations();
             }
         }
     };
