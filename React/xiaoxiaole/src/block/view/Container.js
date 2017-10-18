@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {fullUpdateBlokStatus, addNeedClearBlocks} from '../actions'
+import {fullUpdateBlokStatus} from '../actions'
 import Block from './Block'
 import ClearBlock from './ClearBlock'
 import './Container.css'
@@ -17,6 +17,7 @@ class Container extends Component {
         this.blockMove = this.blockMove.bind(this);
         this.moveBlocks = [];   //需要移动的块
         this.needClearBlocks = []; //需要消除的块
+        this.blockAction = []; //需要移动动作的块
 
         this.state = {
             blockStatus: this.getOwnState()
@@ -25,12 +26,19 @@ class Container extends Component {
 
     componentDidMount () {
         this.context.store.subscribe(() => {
+            console.info('in container, store subscribe, action type:' + this.getStateType());
             if(this.getStateType() == ActionType.FULLUPDATEBLOCKSTATUS){
                 this.setState({blockStatus: this.getOwnState()});
             } else if (this.getStateType() == ActionType.ADDNEEDCLEARBLOCKS) {
                 let needClearBlocks= this.getNeedClearBlocks();
                 if(needClearBlocks.length > 0){
                     this.needClearBlocks = needClearBlocks;
+                    this.setState({});
+                }
+            } else if (this.getStateType() == ActionType.ADDBLOCKACTION) {
+                let blockAction = this.getBlockAction();
+                if(blockAction.length > 0) {
+                    this.blockAction = blockAction;
                     this.setState({});
                 }
             }
@@ -46,7 +54,11 @@ class Container extends Component {
     }
 
     getNeedClearBlocks () {
-        return this.context.store.getState().needClearBlocks
+        return this.context.store.getState().needClearBlocks;
+    }
+
+    getBlockAction () {
+        return this.context.store.getState().blockAction;
     }
     
     blockMove ({row, line, moveType}) {
@@ -99,22 +111,44 @@ class Container extends Component {
             getBlocks = (row, line, status) => {
                 let moveBlocks = this.moveBlocks,
                     needClearBlocks = this.needClearBlocks,
+                    blockAction = this.blockAction,
                     newAnimation = [];
-                for(let moveBlock of moveBlocks) {
-                    if(moveBlock.row == row && moveBlock.line == line){ //如果是特殊块则需要增加动画属性
-                        newAnimation.push({type: 'move', moveType: moveBlock.moveAnimation}, {type: 'setColor', color: status});
-                        break;
+                if(moveBlocks.length > 0) {
+                    for(let moveBlock of moveBlocks) {
+                        if(moveBlock.row == row && moveBlock.line == line){ //如果是特殊块则需要增加动画属性
+                            newAnimation.push({type: 'move', moveType: moveBlock.moveAnimation}, {type: 'setColor', color: status});
+                            break;
+                        }
+                    }
+                    if(newAnimation.length === 0) {
+                        newAnimation.push({type: 'timeout', time: 500});
                     }
                 }
 
-                if(needClearBlocks.length > 0 && needClearBlocks[row][line].needClear) {
-                    newAnimation.push(...[newAnimation.length > 0 ? {} : {type: 'timeout', time: 500}, {type: 'disappear'}]);
+
+                if(needClearBlocks.length > 0) {
+                    if(needClearBlocks[row][line].needClear) {
+                        newAnimation.push({type: 'disappear'});
+                    } else {
+                        newAnimation.push({type: 'timeout', time: 2000});
+                    }
+                }
+
+                if(blockAction.length > 0) {
+                    if(blockAction[row][line].downCount > 0){
+                        newAnimation.push({type: 'move', moveType: 'down', moveNumber: blockAction[row][line].downCount},
+                            {type: 'setColor', color: blockAction[row][line].newStatus});
+                    } else if(blockAction[row][line].needClear){
+                        newAnimation.push({type: 'setColor', color: 'white'}, {type: 'timeout', time: 500}, {type: 'setColor', color: blockAction[row][line].newStatus});
+                    } else {
+                        newAnimation.push({type: 'timeout', time: 500});
+                    }
                 }
 
                 return (
                     <Block key={line} newAnimation={newAnimation} status={status} row={parseInt(row, 10)} line={parseInt(line, 10)} touch={this.blockMove}/>
                 )
-            }
+            };
 
         for(let row in blockStatus) {
             if(blockStatus.hasOwnProperty(row)){
@@ -141,6 +175,12 @@ class Container extends Component {
     componentDidUpdate () {
         if(this.moveBlocks.length > 0){
             this.moveBlocks = [];
+        }
+        if(this.needClearBlocks.length > 0) {
+            this.needClearBlocks = [];
+        }
+        if(this.blockAction.length > 0) {
+            this.blockAction = [];
         }
     }
 }

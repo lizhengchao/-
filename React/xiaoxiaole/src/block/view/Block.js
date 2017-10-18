@@ -49,8 +49,13 @@ class Block extends Component {
     }
 
     shouldComponentUpdate (nextProps, nextState) {
+        let hasNewState = () => {
+            return this.state.color != nextState.color || this.state.transform != nextState.transform ||
+                this.state.transition != nextState.transition || this.state.opacity != nextState.opacity
+        }
+
         if((nextProps.newAnimation.constructor === Object ||
-            (nextProps.newAnimation.constructor === Array && nextProps.newAnimation.length > 0))){
+            (nextProps.newAnimation.constructor === Array && nextProps.newAnimation.length > 0)) && hasNewState()){
             return true;
         } else {
             return false;
