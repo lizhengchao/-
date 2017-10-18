@@ -5,7 +5,7 @@ import * as ActionTypes from './actionTypes'
 import * as BaseConfig from '../baseConfig'
 
 export default (state, action) => {
-    const {type, rowNumber, lineNumber, newStatus, newBlockStatus, needClearBlocks} = action;
+    const {type, rowNumber, lineNumber, newStatus, newBlockStatus, needClearBlocks, blockAction} = action;
     switch (type) {
         case ActionTypes.UPDATEBLOCKSTATUS:
             let newState = state; //由于做深拷贝会有较大的性能影响，并且此处直接更改state也不会引起什么问题
@@ -33,6 +33,12 @@ export default (state, action) => {
                 state.needClearBlocks = needClearBlocks;
             }
             state.type = ActionTypes.ADDNEEDCLEARBLOCKS;
+            return state;
+        case ActionTypes.ADDBLOCKACTION:
+            if(blockAction.constructor == Array) {
+                state.blockAction = blockAction;
+            }
+            state.type = ActionTypes.ADDBLOCKACTION;
             return state;
         default:
             return state;

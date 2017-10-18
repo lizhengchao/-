@@ -7,7 +7,8 @@ import BlockReducer from './block/reducer'
 
 const initData = {
     blockStatus: [],
-    needClearBlocks: [],
+    needClearBlocks: [], //记录需要清除的块
+    BlockAction: [], //记录块清除后各个块接下的动作
     type: '' //记录action type
 };
 

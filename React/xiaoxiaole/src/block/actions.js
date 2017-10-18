@@ -25,3 +25,10 @@ export const addNeedClearBlocks = (needClearBlocks) => {
         needClearBlocks
     }
 }
+
+export const addBlockAction = (blockAction) => {
+    return {
+        type: ActionTypes.ADDBLOCKACTION,
+        blockAction
+    }
+}
