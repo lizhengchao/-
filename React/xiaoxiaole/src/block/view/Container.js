@@ -135,7 +135,7 @@ class Container extends Component {
                 }
 
                 if(blockAction.length > 0) {
-                    if(blockAction[row][line].downCount > 0){
+                    if(blockAction[row][line].downCount > 0 && !blockAction[row][line].needClear){
                         newAnimation.push({type: 'move', moveType: 'down', moveNumber: blockAction[row][line].downCount},
                             {type: 'setColor', color: blockAction[row][line].newStatus});
                     } else if(blockAction[row][line].needClear){
