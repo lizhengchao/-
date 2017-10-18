@@ -50,8 +50,7 @@ class Block extends Component {
 
     shouldComponentUpdate (nextProps, nextState) {
         if((nextProps.newAnimation.constructor === Object ||
-            (nextProps.newAnimation.constructor === Array && nextProps.newAnimation.length > 0))
-            &&!this.isStop){
+            (nextProps.newAnimation.constructor === Array && nextProps.newAnimation.length > 0))){
             return true;
         } else {
             return false;
@@ -114,9 +113,7 @@ class Block extends Component {
                             transform: ''
                         });
                 }
-                setTimeout(()=> {
-                    this.isStop = true;
-                }, 0);
+                this.isStop = true;
                 setTimeout(() => {
                     this.isStop = false;
                     this.setState({
@@ -131,9 +128,7 @@ class Block extends Component {
                     opacity: '0',
                     transition: 'opacity 2s'
                 });
-                setTimeout(()=>{
-                    this.isStop = true;
-                },0);
+                this.isStop = true;
                 setTimeout(() => {
                     this.isStop = false;
                     this.setState({
