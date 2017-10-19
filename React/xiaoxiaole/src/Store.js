@@ -14,9 +14,9 @@ const initData = {
 
 //initialize data
 (() => {
-    for(let i=0; i<baseConfig.LINE_COUNT; i++){
+    for(let i=0; i<baseConfig.ROW_COUNT; i++){
         let line = [];
-        for(let j=0; j<baseConfig.ROW_COUNT; j++){
+        for(let j=0; j<baseConfig.LINE_COUNT; j++){
             line.push(baseConfig.getRandomType());
         }
         initData.blockStatus.push(line);

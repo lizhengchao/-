@@ -17,7 +17,7 @@ export default (state, action) => {
                 newBlockStatus.length === BaseConfig.ROW_COUNT) {
                 for(let blockStatus of newBlockStatus) {
                     if(blockStatus.constructor !== Array ||
-                        newBlockStatus.length !== BaseConfig.LINE_COUNT) {
+                        blockStatus.length !== BaseConfig.LINE_COUNT) {
                         console.error('full update block status fail, passing an error newBlockStatus');
                         return state;
                     }
