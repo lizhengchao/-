@@ -112,8 +112,10 @@ class Container extends Component {
                 let moveBlocks = this.moveBlocks,
                     needClearBlocks = this.needClearBlocks,
                     blockAction = this.blockAction,
-                    newAnimation = [];
+                    newAnimation = [],
+                    canTouch = true;
                 if(moveBlocks.length > 0) {
+                    canTouch = false;
                     for(let moveBlock of moveBlocks) {
                         if(moveBlock.row == row && moveBlock.line == line){ //如果是特殊块则需要增加动画属性
                             newAnimation.push({type: 'move', moveType: moveBlock.moveAnimation}, {type: 'setColor', color: status});
@@ -127,6 +129,7 @@ class Container extends Component {
 
 
                 if(needClearBlocks.length > 0) {
+                    canTouch = false;
                     if(needClearBlocks[row][line].needClear) {
                         newAnimation.push({type: 'disappear'});
                     } else {
@@ -135,6 +138,7 @@ class Container extends Component {
                 }
 
                 if(blockAction.length > 0) {
+                    canTouch = false;
                     if(blockAction[row][line].downCount > 0 && !blockAction[row][line].needClear){
                         newAnimation.push({type: 'move', moveType: 'down', moveNumber: blockAction[row][line].downCount},
                             {type: 'setColor', color: blockAction[row][line].newStatus});
@@ -146,7 +150,7 @@ class Container extends Component {
                 }
 
                 return (
-                    <Block key={line} newAnimation={newAnimation} status={status} row={parseInt(row, 10)} line={parseInt(line, 10)} touch={this.blockMove}/>
+                    <Block key={line} newAnimation={newAnimation} status={status} row={parseInt(row, 10)} line={parseInt(line, 10)} touch={this.blockMove} canTouch={canTouch}/>
                 )
             };
 

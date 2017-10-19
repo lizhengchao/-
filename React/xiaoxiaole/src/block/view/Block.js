@@ -176,38 +176,44 @@ class Block extends Component {
     }
 
     touchStart (e) {
-        this.touchStartX = e.touches[0].clientX;
-        this.touchStartY = e.touches[0].clientY;
+        if(this.props.canTouch) {
+            this.touchStartX = e.touches[0].clientX;
+            this.touchStartY = e.touches[0].clientY;
+        }
     }
 
     touchMove (e) {
-        this.touchEndX = e.touches[0].clientX;
-        this.touchEndY = e.touches[0].clientY;
+        if(this.props.canTouch) {
+            this.touchEndX = e.touches[0].clientX;
+            this.touchEndY = e.touches[0].clientY;
+        }
     }
 
     touchEnd (e) {
-        //告诉外部组件滑动的方向和自己所属的位置
-        let touchMoveX = this.touchEndX - this.touchStartX,
-            touchMoveY = this.touchEndY - this.touchStartY,
-            moveType = '';
-        if (Math.abs(touchMoveX) > Math.abs(touchMoveY)){
-            if (touchMoveX > 0) {
-                moveType = 'right';    
-            } else {
-                moveType = 'left';  
+        if(this.props.canTouch) {
+            //告诉外部组件滑动的方向和自己所属的位置
+            let touchMoveX = this.touchEndX - this.touchStartX,
+                touchMoveY = this.touchEndY - this.touchStartY,
+                moveType = '';
+            if (Math.abs(touchMoveX) > Math.abs(touchMoveY)){
+                if (touchMoveX > 0) {
+                    moveType = 'right';
+                } else {
+                    moveType = 'left';
+                }
+            } else if (Math.abs(touchMoveX) < Math.abs(touchMoveY)) {
+                if (touchMoveY > 0) {
+                    moveType = 'down';
+                } else {
+                    moveType = 'up';
+                }
             }
-        } else if (Math.abs(touchMoveX) < Math.abs(touchMoveY)) {
-            if (touchMoveY > 0) {
-                moveType = 'down';
-            } else {
-                moveType = 'up';
-            }
+            this.props.touch({
+                row: this.props.row,
+                line: this.props.line,
+                moveType: moveType
+            });
         }
-        this.props.touch({
-            row: this.props.row, 
-            line: this.props.line, 
-            moveType: moveType
-        });
     }
 }
 
@@ -215,9 +221,14 @@ Block.propTypes = {
     status: PropTypes.string,
     line: PropTypes.number,
     row: PropTypes.number,
+    canTouch: PropTypes.bool, //当前块是否可以被滑动
     touch: PropTypes.func,
     // newAnimation: PropTypes.object  //接下来要完成的新动画
 };
+
+Block.defaultProps = {
+    touch: true
+}
 
 Block.contextTypes = {
     baseConfig: PropTypes.object
