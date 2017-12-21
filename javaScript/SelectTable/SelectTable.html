@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--使用原生js和jQuery实现一个可以正选反选的列表-->
+<div id="root">
+    <input type="checkbox" id="selectAll"/>全选
+    <br/>
+    <button id="selectReverse">取反</button>
+</div>
+<script type="text/javascript">
+    var root = document.getElementById('root'),
+        dataList = ["row1", "row2", "row3", "row4"],
+        selectStatus = [], //记录选中状态
+        checkboxClick = function(e) {
+            var checkbox = e.currentTarget,
+                idIndex = checkbox.idIndex;
+
+            selectStatus[idIndex] = !selectStatus[idIndex];
+        },
+        buildRowDom = function(id, text) {
+            var rowDom = document.createElement("div"),
+                checkBox = document.createElement("input"),
+                textDom = document.createElement("span");
+            checkBox.type = 'checkbox';
+            checkBox.idIndex = id;
+            checkBox.addEventListener("click", checkboxClick);
+            textDom.innerHTML = text;
+            rowDom.appendChild(checkBox);
+            rowDom.appendChild(textDom);
+            return rowDom;
+        },
+        refreshCheckbox = function () {
+            var inputs = document.getElementsByTagName("input");
+            for(var i=0; i<inputs.length; i++) {
+                var input = inputs[i];
+                if(input.type === 'checkbox' && typeof input.idIndex !== 'undefined') {
+                    input.checked = selectStatus[input.idIndex];
+                }
+            }
+        }
+
+    for(var i=0; i< dataList.length; i++) {
+        var data = dataList[i];
+        selectStatus.push(false);
+        var rowDom = buildRowDom(i, data);
+        root.appendChild(rowDom);
+    }
+
+    var selectAll = document.getElementById('selectAll'),
+        selectReverse = document.getElementById('selectReverse');
+
+    selectAll.addEventListener('click', function(e) {
+        if(e.currentTarget.checked) {
+            for(var i=0; i<selectStatus.length; i++) {
+                selectStatus[i] = true;
+            }
+        } else {
+            for(var i=0; i<selectStatus.length; i++) {
+                selectStatus[i] = false;
+            }
+        }
+        refreshCheckbox();
+    })
+
+    selectReverse.addEventListener('click', function(e) {
+        for(var i=0; i<selectStatus.length; i++) {
+            selectStatus[i] = !selectStatus[i];
+        }
+        refreshCheckbox();
+    })
+
+
+
+</script>
+</body>
+</html>
