@@ -10,21 +10,21 @@ var option = {
     method:'POST',
     headers:{
         //'Content-Type':'application/x-www-form-urlencoded',
-        'Content-Type':'application/jspn; charset=UTF-8'
+        'Content-Type':'application/json; charset=UTF-8'
     }
 };
 
-var data = xlsx.parse('./userData.xls');
+var data = xlsx.parse('test/userData.xls');
 var sheet1 = data[0];
 var sheet1Data = sheet1.data;
 
 
 for(var data of sheet1Data) {
     var item = {};
-    item.esn = '';
+    item.esn = '710364';
     item.nccode = data[2];
     item.mobile = data[3];
-    item.weixinid = data[1];
+    item.userid = data[1];
     item.name = data[0];
 
     var req = http.request(option, function(resp){
@@ -34,7 +34,7 @@ for(var data of sheet1Data) {
     req.on('error',function(err){
         console.error(err);
     });
-    req.write(querystring.stringify(item));
+    req.write(JSON.stringify(item));
     req.end();
 
 }
