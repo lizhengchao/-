@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <title>Title</title>
+</head>
+<body>
+<span>设置速度：</span>
+<input type="number">
+<button class="submit">确定</button>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $('.submit')[0].addEventListener('click', function() {
+        var number = $('input')[0].value;
+        $.ajax('http://localhost:3001/setSpeed?speed=' + number,{
+            type: 'get',
+            success: function(res) {
+                if(res == 0) {
+                    alert('success');
+                }
+            }
+        })
+    })
+</script>
+</body>
+</html>
