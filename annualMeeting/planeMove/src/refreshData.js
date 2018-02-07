@@ -1,28 +1,22 @@
 import {round} from "./utils";
 
+var inerval;
+
 var getData = (callback) => {
 
     requestData();
 
     function requestData () {
 
-        // var startTime = new Date().getTime();
-        //模仿从网络获取数据，时间随机 1-4s之间
-        // setInterval(() => {
-        //     var finishTime = new Date();
-        //     var dataList = getRandomDataList();
-        //     callback && callback(dataList);
-        //
-        // }, (1000 + Math.random()*3000));
-
+        var sTime = new Date().getTime();
         //每秒尝试获取一次数据
-        setInterval(() => {
-            var sTime = new Date().getTime();
+        inerval = setInterval(() => {
             getSpeed(function(speed) {
                 var eTime = new Date().getTime(),
-                    useTime = round((eTime - sTime)/1000, 2) + 1,
+                    useTime = round((eTime - sTime)/1000, 2),
                     distance = round(useTime * speed, 2),
                     sumDistance = getSumDistance(distance);
+                sTime = eTime;
 
                 callback && callback(sumDistance, useTime);
             })
@@ -40,7 +34,8 @@ var getData = (callback) => {
 
     function getSpeed(callback) {
         $.get({
-            url: 'http://localhost:3001/getSpeed',
+            url: 'http://www.netcall.cc:3001/getSpeed',
+            cache:false,
             success: function(res) {
                 callback && callback(res);
             }
@@ -48,11 +43,24 @@ var getData = (callback) => {
     }
 }
 
-var mapDataToDistance = (data) => {
-    return data;
+function clearGetData () {
+    if(inerval) {
+        clearInterval(inerval);
+    }
+}
+
+function setSpeed(speed, callback) {
+    $.get({
+        url: 'http://www.netcall.cc:3001/setSpeed?speed=' + speed,
+        cache:false,
+        success: function(res) {
+            callback && callback(res);
+        }
+    })
 }
 
 export {
     getData,
-    mapDataToDistance
+    clearGetData,
+    setSpeed
 };

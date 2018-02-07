@@ -1,5 +1,3 @@
-import {appearMoveYList, redPacketExsitTime} from './const';
-
 function round(v,e){
     var t=1;
     for(;e>0;t*=10,e--);
@@ -48,6 +46,8 @@ function doByOrder (action) {
     return run;
 }
 
+
+var hasClearRender = true;
 /**
  * 一帧一帧渲染动画
  * @param time 时间/s
@@ -56,17 +56,24 @@ function doByOrder (action) {
  * @param modelDom 需要移动的飞机dom
  * @param finishCallback 渲染完成后的回调
  */
-function frameRenderModelMove(time, preMoveY, nextMoveY, modelDom, finishCallback) {
+function frameRenderModelMove(time, preMoveY, nextMoveY, modelDoms, finishCallback) {
+    var timeStart = new Date().getTime()
+
     var renderCount = round(time*60), //在time时间内渲染的次数
         oneFrameMoveY = round((nextMoveY - preMoveY)/renderCount*1000, 0), //接下来每一帧会移动的距离，小数点后三位，并变为整数，因为小数在计算机中计算会有偏差
         trueNextMoveY = preMoveY*1000 + renderCount*oneFrameMoveY, //由于每一帧移动的距离是取最后三位算出来的，所以最后一帧的真实距离会有偏差
         curMoveY = preMoveY*1000;
 
+    hasClearRender = false;
+
     function move () {
+        if(hasClearRender) {return}
         curMoveY = curMoveY + oneFrameMoveY;
-        $(modelDom).css('transform', "translateY("+(curMoveY/1000)+"px)");
+        $(modelDoms[0]).css('transform', "translateY("+(curMoveY/1000)+"px)");
+        (modelDoms[1]).css('transform', "translateY("+(curMoveY/1000)+"px)");
         if(curMoveY == trueNextMoveY) {
-            finishCallback && finishCallback(modelDom, round(trueNextMoveY/1000, 0));
+            console.info('finish container move, preMoveY:' + preMoveY + ' time: ' + (new Date().getTime() - timeStart) + 'passTime: ');
+            finishCallback && finishCallback(modelDoms, round(trueNextMoveY/1000, 0));
             return;
         } else { //未渲染到指定位置则继续在下一帧渲染
             requestAnimationFrame(move);
@@ -76,11 +83,17 @@ function frameRenderModelMove(time, preMoveY, nextMoveY, modelDom, finishCallbac
     requestAnimationFrame(move);
 }
 
-var nextRedPacketIndex = 0;
-var nextRedPacketY = appearMoveYList[nextRedPacketIndex].moveY;
+var appearMoveYList, nextRedPacketY, nextRedPacketIndex = 0;
+
+function setAppearMoveYList(list) {
+    appearMoveYList = list;
+    nextRedPacketY = appearMoveYList[nextRedPacketIndex].moveY
+}
+
 var lastRender = false; //一个红包的最后一次渲染
 var numberZeroKeep = false;
 function frameRefreshDistance(time, preMoveY, nextMoveY, distanceDom, finishCallback) {
+    var timeStart = new Date().getTime()
 
     var preDistanceToPacket = nextRedPacketY - preMoveY, //本次刷新开始时距离红包的Y轴距离
         nextDistanceToPacket = nextRedPacketY - nextMoveY;//本次刷新结束时距离红包的Y轴距离
@@ -106,6 +119,7 @@ function frameRefreshDistance(time, preMoveY, nextMoveY, distanceDom, finishCall
             distanceDom.text(0);
         }
         if(curCount == trueNextCount) {
+            console.info('finish text update, preMoveY:' + preMoveY + ' time: ' + (new Date().getTime() - timeStart));
             if(lastRender) {//最后一次渲染时直接将text置为0
                 distanceDom.text(0);
                 lastRender = false;
@@ -124,11 +138,19 @@ function frameRefreshDistance(time, preMoveY, nextMoveY, distanceDom, finishCall
 //红包出现逻辑
 function redPacketAppear(curRedPacketIndex) {
     var redPacket = $('#redPacket'),
-        curPacketUrl = appearMoveYList[curRedPacketIndex].imgSrc;
+        packetText = $('.packetText'),
+        curPacketUrl = appearMoveYList[curRedPacketIndex].imgSrc,
+        redPacketNumber = appearMoveYList[curRedPacketIndex].redPacketNumber
 
     if(!curPacketUrl) { return;}
 
     redPacket.css('background-image', 'url("'+ curPacketUrl +'")');
+    if(redPacketNumber) {
+        packetText.text(redPacketNumber + '元');
+        if(redPacketNumber >= 100) {
+            packetText.css('margin-left', '132px')
+        }
+    }
 
     if(curRedPacketIndex < appearMoveYList.length -2) {
         redPacket.removeClass();
@@ -174,13 +196,34 @@ function redPacketAppear(curRedPacketIndex) {
                 redPacket.addClass('state7');
             }, 500)
         }, 2000);
+
+        //出现重置按钮
+        setTimeout(function() {
+            var resetBtn = $('.resetBtn');
+            resetBtn.css('opacity', '1');
+        }, 2500);
     }
+}
+
+function reset () {
+    nextRedPacketIndex = 0;
+    lastRender = false;
+    numberZeroKeep = false;
+    hasClearRender = true;
+
+    var redPacket = $('#redPacket');
+    redPacket.removeClass();
+    redPacket.addClass('state0');
+
+    var packetText = $('.packetText');
+    packetText.text('');
 }
 
 export {
     round,
     doByOrder,
     frameRenderModelMove,
+    setAppearMoveYList,
     frameRefreshDistance,
-    redPacketAppear
+    reset
 }
