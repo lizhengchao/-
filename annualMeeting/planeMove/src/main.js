@@ -10,7 +10,6 @@ var bgsContainer = $('.backgrounds-container'),
     text = $('.text'),
     distance = $('#distance'),
     topGameBtn = $('.topGameBtn'),
-    resetBtn = $('.resetBtn'),
     fire = $('.fire');
 initView();
 
@@ -23,59 +22,49 @@ topGameBtn[0].addEventListener('click', function() {
         $(fire[0]).css('animation', 'fire .5s linear infinite');
         $(fire[1]).css('animation', 'fire .5s linear infinite');
         refreshData();
+        setTimeout(()=>{
+            topGameBtn.css('display', 'none')
+        }, 1000)
     }, 2000);
-    setAppearMoveYList([
-        {
-            moveY: 2000,
-            imgSrc: 'source/288.png'
-        },
-        {
-            moveY: 4000,
-            imgSrc: 'source/888.png'
-        },
-        {
-            moveY: 6000,
-            imgSrc: 'source/1188.png'
-        },
-        {
-            moveY: 8000,
-            imgSrc: 'source/1688.png'
-        },
-        {
-            moveY: 10000,
-            imgSrc: 'source/1888.png'
-        },
-        {
-            moveY: 12000,
-            imgSrc: 'source/2018.png'
-        },
-        {
-            moveY: 0
-        }
-    ]);
+    // setAppearMoveYList([
+    //     {
+    //         moveY: 2000,
+    //         imgSrc: 'source/288.png',
+    //         redPacketNumber: 288
+    //     },
+    //     {
+    //         moveY: 4000,
+    //         imgSrc: 'source/888.png',
+    //         redPacketNumber: 888
+    //     },
+    //     {
+    //         moveY: 6000,
+    //         imgSrc: 'source/1188.png',
+    //         redPacketNumber: 1188
+    //     },
+    //     {
+    //         moveY: 8000,
+    //         imgSrc: 'source/1688.png',
+    //         redPacketNumber: 1688
+    //     },
+    //     {
+    //         moveY: 10000,
+    //         imgSrc: 'source/1888.png',
+    //         redPacketNumber: 1888
+    //     },
+    //     {
+    //         moveY: 12000,
+    //         imgSrc: 'source/2018.png',
+    //         redPacketNumber: 2018
+    //     },
+    //     {
+    //         moveY: 0
+    //     }
+    // ]);
+
+    setAppearMoveYList(getRandomAppearMoveYList());
     playRadio();
-    initTime();
 });
-
-resetBtn[0].addEventListener('click', function() {
-    clearGetData();
-    bgsContainer.css('transform', 'translateY(0px)');
-    text.css('display', 'none');
-    reset();
-    topGameBtn.css('opacity', '1');
-    resetBtn.css('opacity', 0);
-
-    var startAudio = $('#startAudio');
-    startAudio[0].load();
-
-    var runAudio = $('#runAudio');
-    runAudio[0].load();
-
-    setSpeed(1);
-
-    time = 30;
-});
-
 
 function initView() {
     $(container).height(window.innerHeight);
@@ -179,6 +168,7 @@ function playRadio() {
     var musics = ['run', 'run1', 'run2', 'run3'];
     var random = parseInt(Math.random()*4);
     runAudio[0].src = 'source/' + musics[random] + '.mp3';
+    // runAudio[0].src = 'source/run.mp3';
     runAudio[0].play();
 }
 

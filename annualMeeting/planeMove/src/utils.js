@@ -70,9 +70,11 @@ function frameRenderModelMove(time, preMoveY, nextMoveY, modelDoms, finishCallba
         if(hasClearRender) {return}
         curMoveY = curMoveY + oneFrameMoveY;
         $(modelDoms[0]).css('transform', "translateY("+(curMoveY/1000)+"px)");
-        (modelDoms[1]).css('transform', "translateY("+(curMoveY/1000)+"px)");
+        if(preMoveY <= 1050) {
+            (modelDoms[1]).css('transform', "translateY("+(curMoveY/1000)+"px)");
+        }
         if(curMoveY == trueNextMoveY) {
-            console.info('finish container move, preMoveY:' + preMoveY + ' time: ' + (new Date().getTime() - timeStart) + 'passTime: ');
+            console.info('finish container move, preMoveY:' + preMoveY + ' time: ' + (new Date().getTime() - timeStart) + 'passTime: ' + time);
             finishCallback && finishCallback(modelDoms, round(trueNextMoveY/1000, 0));
             return;
         } else { //未渲染到指定位置则继续在下一帧渲染
@@ -140,42 +142,19 @@ function redPacketAppear(curRedPacketIndex) {
     var redPacket = $('#redPacket'),
         packetText = $('.packetText'),
         curPacketUrl = appearMoveYList[curRedPacketIndex].imgSrc,
-        redPacketNumber = appearMoveYList[curRedPacketIndex].redPacketNumber
+        redPacketNumber = appearMoveYList[curRedPacketIndex].redPacketNumber;
 
     if(!curPacketUrl) { return;}
 
-    redPacket.css('background-image', 'url("'+ curPacketUrl +'")');
     if(redPacketNumber) {
         packetText.text(redPacketNumber + '元');
-        if(redPacketNumber >= 100) {
-            packetText.css('margin-left', '132px')
-        }
     }
 
     if(curRedPacketIndex < appearMoveYList.length -2) {
-        redPacket.removeClass();
-        redPacket.addClass('state1');
-
-        new Promise(function(resolve, reject) {
-            setTimeout(function() {
-                redPacket.removeClass();
-                redPacket.addClass('state2');
-                resolve();
-            }, 660);
-        }).then(function(){
-            return new Promise(function(resolve, reject){
-                setTimeout(function() {
-                    redPacket.removeClass();
-                    redPacket.addClass('state3');
-                    resolve();
-                }, 660);
-            })
-        }).then(function(){
-            setTimeout(function() {
-                redPacket.removeClass();
-                redPacket.addClass('state0');
-            }, 660);
-        })
+        redPacket.addClass('s1');
+        setTimeout(function() {
+            redPacket.removeClass();
+        }, 3000);
     } else if(curRedPacketIndex == appearMoveYList.length -2) {
         //最后一个做特殊的动画处理
         var redPacket2 = redPacket.clone();
@@ -197,11 +176,26 @@ function redPacketAppear(curRedPacketIndex) {
             }, 500)
         }, 2000);
 
-        //出现重置按钮
-        setTimeout(function() {
-            var resetBtn = $('.resetBtn');
-            resetBtn.css('opacity', '1');
-        }, 2500);
+        var radio = $('#runAudio')[0];
+        //声音渐轻
+        var waitTime = 4000,
+            timeSpace = 100,
+            time = waitTime/timeSpace,
+            volumeParam = round(1/time, 3);
+        var interval = setInterval(function() {
+            time --;
+            radio.volume = volumeParam*time;
+            if(time == 0) {
+                clearInterval(interval);
+                //更改背景音乐
+                radio.volume = 1;
+                radio.src = 'source/end.mp3';
+                radio.loop = 'loop';
+                radio.load();
+                radio.play();
+            }
+        }, timeSpace);
+
     }
 }
 
