@@ -14,7 +14,7 @@ var getData = (callback) => {
             getSpeed(function(speed) {
                 var eTime = new Date().getTime(),
                     useTime = round((eTime - sTime)/1000, 2),
-                    distance = round(useTime * speed, 2),
+                    distance = round(useTime * speed, 0),
                     sumDistance = getSumDistance(distance);
                 sTime = eTime;
 
@@ -27,7 +27,7 @@ var getData = (callback) => {
     var sumDistance = 0;
     function getSumDistance (curDistance) {
 
-        var curDistance = curDistance + Math.round(Math.random()*curDistance/10);
+        // var curDistance = curDistance + Math.round(Math.random()*curDistance/10);
         sumDistance += curDistance;
         return sumDistance;
     }

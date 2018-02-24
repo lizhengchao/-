@@ -57,6 +57,11 @@ var hasClearRender = true;
  * @param finishCallback 渲染完成后的回调
  */
 function frameRenderModelMove(time, preMoveY, nextMoveY, modelDoms, finishCallback) {
+    if(time === 0) {
+        finishCallback && finishCallback(modelDoms, nextMoveY);
+        return;
+    }
+
     var timeStart = new Date().getTime()
 
     var renderCount = round(time*60), //在time时间内渲染的次数
@@ -95,6 +100,11 @@ function setAppearMoveYList(list) {
 var lastRender = false; //一个红包的最后一次渲染
 var numberZeroKeep = false;
 function frameRefreshDistance(time, preMoveY, nextMoveY, distanceDom, finishCallback) {
+    if(time === 0) {
+        finishCallback && finishCallback(distanceDom, nextMoveY);
+        return;
+    }
+
     var timeStart = new Date().getTime()
 
     var preDistanceToPacket = nextRedPacketY - preMoveY, //本次刷新开始时距离红包的Y轴距离
@@ -121,7 +131,7 @@ function frameRefreshDistance(time, preMoveY, nextMoveY, distanceDom, finishCall
             distanceDom.text(0);
         }
         if(curCount == trueNextCount) {
-            console.info('finish text update, preMoveY:' + preMoveY + ' time: ' + (new Date().getTime() - timeStart));
+            console.info('finish text update, preMoveY:' + preMoveY + ' time: ' + (new Date().getTime() - timeStart) + ' passtime:' + time);
             if(lastRender) {//最后一次渲染时直接将text置为0
                 distanceDom.text(0);
                 lastRender = false;

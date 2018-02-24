@@ -26,43 +26,43 @@ topGameBtn[0].addEventListener('click', function() {
             topGameBtn.css('display', 'none')
         }, 1000)
     }, 2000);
-    // setAppearMoveYList([
-    //     {
-    //         moveY: 2000,
-    //         imgSrc: 'source/288.png',
-    //         redPacketNumber: 288
-    //     },
-    //     {
-    //         moveY: 4000,
-    //         imgSrc: 'source/888.png',
-    //         redPacketNumber: 888
-    //     },
-    //     {
-    //         moveY: 6000,
-    //         imgSrc: 'source/1188.png',
-    //         redPacketNumber: 1188
-    //     },
-    //     {
-    //         moveY: 8000,
-    //         imgSrc: 'source/1688.png',
-    //         redPacketNumber: 1688
-    //     },
-    //     {
-    //         moveY: 10000,
-    //         imgSrc: 'source/1888.png',
-    //         redPacketNumber: 1888
-    //     },
-    //     {
-    //         moveY: 12000,
-    //         imgSrc: 'source/2018.png',
-    //         redPacketNumber: 2018
-    //     },
-    //     {
-    //         moveY: 0
-    //     }
-    // ]);
+    setAppearMoveYList([
+        {
+            moveY: 2000,
+            imgSrc: 'source/288.png',
+            redPacketNumber: 288
+        },
+        {
+            moveY: 4000,
+            imgSrc: 'source/888.png',
+            redPacketNumber: 888
+        },
+        {
+            moveY: 6000,
+            imgSrc: 'source/1188.png',
+            redPacketNumber: 1188
+        },
+        {
+            moveY: 8000,
+            imgSrc: 'source/1688.png',
+            redPacketNumber: 1688
+        },
+        {
+            moveY: 10000,
+            imgSrc: 'source/1888.png',
+            redPacketNumber: 1888
+        },
+        {
+            moveY: 12000,
+            imgSrc: 'source/2018.png',
+            redPacketNumber: 2018
+        },
+        {
+            moveY: 0
+        }
+    ]);
 
-    setAppearMoveYList(getRandomAppearMoveYList());
+    // setAppearMoveYList(getRandomAppearMoveYList());
     playRadio();
 });
 
@@ -138,7 +138,6 @@ function refreshData() {
      * @param curMoveY
      */
     function appendBackground(curMoveY) {
-        console.info('needAddY:' + needAddY);
         if(needAddY - curMoveY <= 700) {
 
             bgsContainer.prepend(bg1.clone());
@@ -167,8 +166,8 @@ function playRadio() {
     var runAudio = $('#runAudio');
     var musics = ['run', 'run1', 'run2', 'run3'];
     var random = parseInt(Math.random()*4);
-    runAudio[0].src = 'source/' + musics[random] + '.mp3';
-    // runAudio[0].src = 'source/run.mp3';
+    // runAudio[0].src = 'source/' + musics[random] + '.mp3';
+    runAudio[0].src = 'source/run.mp3';
     runAudio[0].play();
 }
 

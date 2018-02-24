@@ -1,0 +1,193 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: black;
+}
+.container {
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+}
+.backgrounds-container {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+}
+/*在js中初始化背景的宽高*/
+.background0 {
+    margin: auto;
+    background: url("source/newIcon/bg-down.png") no-repeat;
+    background-size: cover;
+}
+/*在js中初始化背景的宽高*/
+.background1 {
+    margin: auto;
+    background: url("source/newIcon/bg-long.png") no-repeat;
+    background-size: cover;
+}
+.background2 {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    background: url("source/newIcon/bg-top.png") no-repeat;
+    background-size: contain;
+    background-position: bottom;
+    z-index: 2;
+}
+.time {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 20px;
+    color: white;
+}
+.text {
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    position: absolute;
+    top: 100px;
+    width: 100%;
+    text-align: center;
+    display: none;
+}
+.plane {
+    position: absolute;
+    bottom: 70px;
+    left: 50%;
+    margin-left: -75px;
+    width: 150px;
+    height: 360px;
+    background: url("source/plane0.png") no-repeat;
+    background-size: 100% 100%;
+    -webkit-transform:translateZ(0)
+}
+.fire {
+    opacity: 0;
+    transition: all 1s;
+    width: 20px;
+    height: 60px;
+    background: url("source/newIcon/fire.png") no-repeat;
+    background-size: 20px 100%;
+    position: absolute;
+    top: 317px;
+    z-index: 10;
+}
+#redPacket {
+    position: absolute;
+    width: 343px;
+    height: 216px;
+    left: 50%;
+    margin-left: -171px;
+    top: -216px;
+    background-size: 100% 100%;
+    background-position: center;
+    z-index: 999;
+    opacity: 1;
+    background-image: url("source/randombg.png");
+}
+.packetText {
+    text-align: center;
+    margin-left: 20px;
+    margin-top: 80px;
+    font-size: 40px;
+    color: white;
+}
+.topGameBtn {
+    width: 120px;
+    height: 120px;
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    margin-left: 200px;
+    background: url("source/newIcon/start-btn.png") no-repeat;
+    background-size: 100% 100%;
+    opacity: 1;
+    transition: opacity 1s;
+    z-index: 3;
+}
+.randomGameBtn {
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    bottom: 40px;
+    right: 30%;
+    border-radius: 200px;
+    border: 10px solid #F5A623;
+    text-align: center;
+    line-height: 80px;
+    color: white;
+    background-color: #f9b400;
+    opacity: 1;
+    transition: opacity 1s;
+}
+.state4 {
+    transition: transform .11s ease-in;
+    transform: translate(0px, 350px);
+    opacity: 1;
+}
+.state5 {
+    transform: translate(-621px, 0px);
+}
+.state6 {
+    transform: translate(621px, 0px);
+}
+.state7 {
+    top: 134px!important;
+    animation: myScale 2s infinite alternate;
+}
+
+.s1 {
+    animation: appear linear 2s;
+}
+
+@keyframes appear {
+    0% {
+        transform:translateY(0px) scale(1, 1);
+    }
+    33% {
+        transform:translateY(150px) scale(.5, .5);
+    }
+    66% {
+        transform:translateY(300px) scale(1, 1);
+    }
+    100% {
+        transform:translateY(450px) scale(.3, .3);
+    }
+}
+
+@keyframes myScale
+{
+    from {transform: scale(.75, .75)}
+    to {transform: scale(1.25, 1.25)}
+}
+
+.appear{
+    position: absolute;
+    top: 0px;
+}
+
+@keyframes myRotate  {
+    0% {transform: rotate(0deg)}
+    100% {transform: rotate(360deg)}
+}
+
+@keyframes fire {
+    0% {
+        height: 60px;
+        opacity: 1;
+    }
+    33% {
+        height: 80px;
+        opacity: 0.8;
+    }
+    66% {
+        height: 90px;
+        opacity: 0.6;
+    }
+    100% {
+        height: 60px;
+        opacity: 1;
+    }
+}

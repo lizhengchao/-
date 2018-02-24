@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="index.css">
+</head>
+<div class="container">
+    <div class="backgrounds-container">
+        <div class="background1"></div>
+        <div class="background0">
+        </div>
+    </div>
+    <!--tranform后z-index会无效，因而将background2单独拿出-->
+    <div class="background2"></div>
+    <div class="time"></div>
+    <div class="text">红包还有<span id="distance">10</span>英尺</div>
+    <div class="plane">
+        <div class="fire" style="left: 24px"></div>
+        <div class="fire" style="left: 102px"></div>
+    </div>
+    <div id="redPacket">
+        <div class="packetText"></div>
+    </div>
+    <div class="topGameBtn"></div>
+</div>
+<audio id="startAudio" src="source/start.mp3" hidden="true"></audio>
+<audio id="runAudio" src="source/run.mp3" hidden="true"></audio>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="bundle.js"></script>
+</body>
+</html>
