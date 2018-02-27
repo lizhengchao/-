@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            margin: 0;
+        }
+        #counter {
+            position: absolute;
+            width: 200px;
+            height: 20px;
+            color: white;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<p id="counter"></p>
+<script src="js/r89/three.js"></script>
+
+<script src="js/r89/DDSLoader.js"></script>
+<script src="js/r89/OBJLoader.js"></script>
+<script src="js/r89/MTLLoader.js"></script>
+
+<script src="js/r89/Detector.js"></script>
+<script src="js/r89/stats.min.js"></script>
+<script>
+    var windowHalfX = window.innerWidth / 2;
+    var windowHalfY = window.innerHeight / 2;
+    var plane1, plane1FileName='plane',
+        plane2, plane2FileName='plane2',
+        planeCount = 10;
+
+
+    init2();
+
+    var renderer;
+    function initThree() {
+        var container = document.createElement('div');
+        document.body.appendChild(container);
+
+        renderer = new THREE.WebGLRenderer();
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setClearColor(0xFFFFFF, 1.0);
+        container.appendChild(renderer.domElement);
+    }
+
+    var scene;
+    function initScene() {
+        scene = new THREE.Scene();
+    }
+
+    var camera;
+    function initCamera() {
+        camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 1, 10000);
+        camera.position.set(2000,2000,2000);
+        camera.lookAt(scene.position);
+    }
+
+    function initLight() {
+        var ambient = new THREE.AmbientLight(0xffffff);
+        scene.add(ambient);
+
+        var directionalLight = new THREE.DirectionalLight(0xffeedd);
+        directionalLight.position.set(0, 0, 1).normalize();
+        scene.add(directionalLight);
+    }
+
+    function loadPlaneObj(fileName,callback) {
+        THREE.Loader.Handlers.add( /\.dds$/i, new THREE.DDSLoader() );
+
+        // model
+        var onProgress = function(xhr) {
+            if (xhr.lengthComputable) {
+                var percentComplete = xhr.loaded / xhr.total * 100;
+                var counter = document.getElementById("counter");
+                counter.innerText = Math.round(percentComplete, 2) + '% downloaded';
+            }
+        };
+
+        var onError = function(xhr) {};
+
+        var mtlLoader = new THREE.MTLLoader();
+        mtlLoader.setTexturePath('source/');
+        mtlLoader.setPath('source/');
+        mtlLoader.load(fileName + '.mtl', function(materials) {
+
+            materials.preload();
+
+            var objLoader = new THREE.OBJLoader();
+            objLoader.setMaterials(materials);
+            objLoader.setPath('source/');
+            objLoader.load(fileName + '.obj', function(object) {
+                object.position.y = -0.5;
+                scene.add(object);
+                callback && callback(object);
+            }, onProgress, onError);
+
+        });
+    }
+
+    function init2() {
+        initThree();
+        initScene();
+        initCamera();
+        initLight();
+        loadPlaneObj(plane1FileName, function(object) {
+            plane1 = object;
+        });
+        loadPlaneObj(plane2FileName, function(object){
+            plane2 = object;
+            plane2.position.z = 1000;
+        });
+        window.addEventListener('resize', onWindowResize, false);
+        animate();
+    }
+
+    function onWindowResize() {
+
+        windowHalfX = window.innerWidth / 2;
+        windowHalfY = window.innerHeight / 2;
+
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+    }
+
+
+    function animate() {
+        if(plane2) {
+            plane2.position.y = plane2.position.y+1;
+        }
+
+        render();
+        requestAnimationFrame(animate);
+    }
+
+    function render() {
+        renderer.render(scene, camera);
+
+    }
+
+    //每架飞机获得的支持数
+    var countArr = [];
+    for(var i=0; i<planeCount; i++) {
+        countArr.push(0);
+    }
+    //模仿每秒从网络获取数据
+    setInterval(function() {
+        for(var i=0; i<planeCount; i++) {
+            var random = parseInt(Math.random()*10);
+            countArr[i] = countArr[i] + random;
+
+        }
+    }, 1000);
+</script>
+</body>
+</html>

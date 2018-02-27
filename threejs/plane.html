@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Three框架</title>
+    <script src="js/r78/three78.js"></script>
+    <script src="js/r78/DSSLoader.js"></script>
+    <script src="js/r78/MTLoader2.js"></script>
+    <script src="js/r78/OBJLoader2.js"></script>
+    <script src="js/r78/Detector.js"></script>
+    <script src="js/r78/stats.min.js"></script>
+    <style type="text/css">
+        div#canvas-frame {
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            height: 600px;
+            background-color: #EEEEEE;
+        }
+
+    </style>
+    <script>
+        var renderer;
+        function initThree() {
+            width = document.getElementById('canvas-frame').clientWidth;
+            height = document.getElementById('canvas-frame').clientHeight;
+            renderer = new THREE.WebGLRenderer({
+                antialias : true
+            });
+            renderer.setSize(width, height);
+            document.getElementById('canvas-frame').appendChild(renderer.domElement);
+            renderer.setClearColor(0xFFFFFF, 1.0);
+        }
+
+        var camera;
+        function initCamera() {
+            camera = new THREE.PerspectiveCamera(100, width / height, 1, 10000);
+            camera.position.x = 1000;
+            camera.position.y = 0;
+            camera.position.z = -2000;
+            camera.up.x = 0;
+            camera.up.y = 1;
+            camera.up.z = 0;
+            camera.lookAt({
+                x : 0,
+                y : 0,
+                z : 0
+            });
+        }
+
+        var scene;
+        function initScene() {
+            scene = new THREE.Scene();
+        }
+
+        function initLight() {
+            var light, light2, light3;
+            //环境光、会让所有物体都发出改光
+            light = new THREE.AmbientLight(0xff0000);
+            // light.position.set(100, 100, 200);
+            scene.add(light);
+        }
+
+        var mesh;
+        function initObject() {
+            var geometry = new THREE.CubeGeometry(200, 100, 50);
+            var texture = THREE.ImageUtils.loadTexture("image/plane.jpg",null,function(t)
+            {
+            });
+            texture.needsUpdate = true;
+            var material = new THREE.MeshBasicMaterial({map:texture});
+            mesh = new THREE.Mesh(geometry, material);
+            scene.add(mesh);
+        }
+
+        function loadPlaneModel () {
+
+            THREE.Loader.Handlers.add( /.dds$/i, new THREE.DDSLoader() );
+
+            // model
+            var onProgress = function(xhr) {
+                if (xhr.lengthComputable) {
+                    var percentComplete = xhr.loaded / xhr.total * 100;
+                    console.log(Math.round(percentComplete, 2) + '% downloaded');
+                }
+            };
+
+            var onError = function(xhr) {};
+
+            // THREE.Loader.Handlers.add(/\.dds$/i, new THREE.DDSLoader());
+
+            var mtlLoader = new THREE.MTLLoader();
+            mtlLoader.setPath('source/');
+            mtlLoader.load('male.mtl', function(materials) {
+
+                materials.preload();
+
+                var objLoader = new THREE.OBJLoader();
+                objLoader.setMaterials(materials);
+                objLoader.setPath('source/');
+                objLoader.load('male.obj', function(object) {
+
+                    object.position.y = -0.5;
+                    scene.add(object);
+
+                }, onProgress, onError);
+
+            });
+        }
+
+
+
+        function animation() {
+            // mesh.position.setY(mesh.position.y+2);
+            renderer.render(scene, camera);
+            requestAnimationFrame(animation);
+        }
+
+        function threeStart() {
+            initThree();
+            initCamera();
+            initScene();
+            initLight();
+            // initObject();
+            loadPlaneModel();
+            renderer.clear();
+            animation();
+        }
+
+    </script>
+</head>
+
+<body onload="threeStart();">
+<div id="canvas-frame"></div>
+</body>
+</html>

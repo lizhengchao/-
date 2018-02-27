@@ -2,9 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Title</title>
 </head>
 <body>
-$END$
+<script type="text/javascript">
+    var a = 0;
+    with(a) {
+        var b = 1;
+    }
+    alert(b);
+    //说明with无法实现块级作用域
+</script>
 </body>
 </html>

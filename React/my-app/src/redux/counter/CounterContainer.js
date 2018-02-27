@@ -16,7 +16,7 @@ class CounterContainer extends Component {
     }
 
     componentDidMount () {
-        this.context.store.subscribe(() => {
+        var unsub = this.context.store.subscribe(() => {
             this.setState({sumCount: this.getOwnState()})
         })
     }
